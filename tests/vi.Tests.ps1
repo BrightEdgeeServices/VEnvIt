@@ -87,17 +87,17 @@ Describe "vi.Tests.ps1: Function Tests" {
                 Mock Invoke-Script { return "Mock: Activated VEnv"
                 } -ParameterFilter { $ScriptPath -eq ($env:VENV_BASE_DIR + "\" + $env:PROJECT_NAME + "_env\Scripts\activate.ps1") }
                 Mock Invoke-Script { return "Mock: Default secrets.ps1"
-                } -ParameterFilter { $ScriptPath -eq ("$env:VENV_SECRETS_DEFAULT_DIR\secrets.ps1") }
+                } -ParameterFilter { $ScriptPath -eq ("$env:VENVIT_DIR\Secrets\secrets.ps1") }
                 Mock Invoke-Script { return "Mock: User secrets.ps1"
-                } -ParameterFilter { $ScriptPath -eq ("$env:VENV_SECRETS_USER_DIR\secrets.ps1") }
+                } -ParameterFilter { $ScriptPath -eq ("~\VenvIt\Secrets\secrets.ps1") }
                 Mock Invoke-Script { return "Mock: Default EnvVar.ps1"
-                } -ParameterFilter { $ScriptPath -eq ("$env:VENV_CONFIG_DEFAULT_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) }
+                } -ParameterFilter { $ScriptPath -eq ("$env:VENVIT_DIR\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) }
                 Mock Invoke-Script { return "Mock: User EnvVar.ps1"
-                } -ParameterFilter { $ScriptPath -eq ("$env:VENV_CONFIG_USER_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) }
+                } -ParameterFilter { $ScriptPath -eq ("~\VenvIt\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) }
                 Mock Invoke-Script { return "Mock: Default CustomSetup.ps1"
-                } -ParameterFilter { $ScriptPath -eq ("$env:VENV_CONFIG_DEFAULT_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) }
+                } -ParameterFilter { $ScriptPath -eq ("$env:VENVIT_DIR\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) }
                 Mock Invoke-Script { return "Mock: User CustomSetup.ps1"
-                } -ParameterFilter { $ScriptPath -eq ("$env:VENV_CONFIG_USER_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) }
+                } -ParameterFilter { $ScriptPath -eq ("~\VenvIt\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) }
 
                 Invoke-VirtualEnvironment -ProjectName "MyProject"
 

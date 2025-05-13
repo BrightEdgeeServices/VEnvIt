@@ -91,10 +91,10 @@ Describe "Upgrade.Tests.ps1: Function Tests" {
             $secrets_dir = [System.Environment]::GetEnvironmentVariable("VENV_SECRETS_DIR", [System.EnvironmentVariableTarget]::Machine)
             $secrets_dir | Should -Be $null
 
-            $config_user_dir = [System.Environment]::GetEnvironmentVariable("VENV_CONFIG_USER_DIR", [System.EnvironmentVariableTarget]::Machine)
-            $config_user_dir | Should -Be $env:VENV_CONFIG_USER_DIR
-            $secrets_user_dir = [System.Environment]::GetEnvironmentVariable("VENV_SECRETS_USER_DIR", [System.EnvironmentVariableTarget]::Machine)
-            $secrets_user_dir | Should -Be $env:VENV_SECRETS_USER_DIR
+            # $config_user_dir = [System.Environment]::GetEnvironmentVariable("VENV_CONFIG_USER_DIR", [System.EnvironmentVariableTarget]::Machine)
+            # $config_user_dir | Should -Be $env:VENV_CONFIG_USER_DIR
+            # $secrets_user_dir = [System.Environment]::GetEnvironmentVariable("VENV_SECRETS_USER_DIR", [System.EnvironmentVariableTarget]::Machine)
+            # $secrets_user_dir | Should -Be $env:VENV_SECRETS_USER_DIR
         }
 
         AfterEach {

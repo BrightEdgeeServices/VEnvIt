@@ -56,7 +56,7 @@ Describe "Install-Conclude.Tests.ps1: Function Tests" {
                 $venv_python_base_dir = $env:VENV_PYTHON_BASE_DIR
             }
             else {
-                $venv_python_base_dir = "$TempDir/Python"
+                $venv_python_base_dir = "$TempDir\Python"
             }
             Unpublish-EnvironmentVariables -EnvVarSet $defEnvVarSet_7_0_0
             $env:APPDATA = (Join-Path -Path $TempDir -ChildPath $env:USERNAME)
@@ -65,23 +65,23 @@ Describe "Install-Conclude.Tests.ps1: Function Tests" {
             Mock Read-Host { return "" } -ParameterFilter { $Prompt -eq "VENVIT_DIR (C:\Program Files\VenvIt)" }
             Mock -ModuleName Install-Conclude Get-ReadAndSetEnvironmentVariables {
                 $env:VENVIT_DIR = "$TempDir\VEnvIt"
-                [System.Environment]::SetEnvironmentVariable("VENVIT_DIR", $env:VENVIT_DIR,[System.EnvironmentVariableTarget]::Machine)
+                [System.Environment]::SetEnvironmentVariable("VENVIT_DIR", $env:VENVIT_DIR, [System.EnvironmentVariableTarget]::Machine)
                 $env:PROJECTS_BASE_DIR = "$TempDir\Projects"
                 [System.Environment]::SetEnvironmentVariable("PROJECTS_BASE_DIR", $env:PROJECTS_BASE_DIR, [System.EnvironmentVariableTarget]::Machine)
                 $env:VENV_BASE_DIR = "$TempDir\VEnv"
                 [System.Environment]::SetEnvironmentVariable("VENV_BASE_DIR", $env:VENV_BASE_DIR, [System.EnvironmentVariableTarget]::Machine)
-                $env:VENV_CONFIG_DEFAULT_DIR = "$env:VENVIT_DIR\Config"
-                [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_DEFAULT_DIR", $env:VENV_CONFIG_DEFAULT_DIR, [System.EnvironmentVariableTarget]::Machine)
-                $env:VENV_CONFIG_USER_DIR = "$TempDir\User\VEnvIt\Config"
-                [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:VENV_CONFIG_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
+                # $env:VENV_CONFIG_DEFAULT_DIR = "$env:VENVIT_DIR\Config"
+                # [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_DEFAULT_DIR", $env:VENV_CONFIG_DEFAULT_DIR, [System.EnvironmentVariableTarget]::Machine)
+                # $env:VENV_CONFIG_USER_DIR = "$TempDir\User\VEnvIt\Config"
+                # [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:VENV_CONFIG_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
                 $env:VENV_ENVIRONMENT = "loc_dev"
                 [System.Environment]::SetEnvironmentVariable("VENV_ENVIRONMENT", $env:VENV_ENVIRONMENT, [System.EnvironmentVariableTarget]::Machine)
                 $env:VENV_PYTHON_BASE_DIR = "$venv_python_base_dir"
                 [System.Environment]::SetEnvironmentVariable("VENV_PYTHON_BASE_DIR", $env:VENV_PYTHON_BASE_DIR, [System.EnvironmentVariableTarget]::Machine)
-                $env:VENV_SECRETS_DEFAULT_DIR = "$env:VENVIT_DIR\Secrets"
-                [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_DEFAULT_DIR", $env:VENV_SECRETS_DEFAULT_DIR, [System.EnvironmentVariableTarget]::Machine)
-                $env:VENV_SECRETS_USER_DIR = "$TempDir\User\VEnvIt\Secrets"
-                [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:VENV_SECRETS_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
+                # $env:VENV_SECRETS_DEFAULT_DIR = "$env:VENVIT_DIR\Secrets"
+                # [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_DEFAULT_DIR", $env:VENV_SECRETS_DEFAULT_DIR, [System.EnvironmentVariableTarget]::Machine)
+                # $env:VENV_SECRETS_USER_DIR = "$TempDir\User\VEnvIt\Secrets"
+                # [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:VENV_SECRETS_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
             }
         }
         It "Should do new installation" {
@@ -195,22 +195,22 @@ Describe "Install-Conclude.Tests.ps1: Function Tests" {
         }
 
         It "Should copy all secrets files" {
-            $secretsPath = Join-Path -Path $env:VENV_SECRETS_DEFAULT_DIR -ChildPath (Get-SecretsFileName)
+            $secretsPath = Join-Path -Path "$env:VENVIT_DIR\Secrets" -ChildPath (Get-SecretsFileName)
             Remove-Item -Path $secretsPath -Recurse -Force
-            $secretsPath = Join-Path -Path $env:VENV_SECRETS_USER_DIR -ChildPath (Get-SecretsFileName)
+            $secretsPath = Join-Path -Path "~\VenvIt\Secrets" -ChildPath (Get-SecretsFileName)
             Remove-Item -Path $secretsPath -Recurse -Force
             $secretsDirList = Publish-Secrets -UpgradeScriptDir $upgradeDetail.Dir
 
-            $secretsDirList | Should -Be @("$env:VENV_SECRETS_DEFAULT_DIR\Secrets.ps1", "$env:VENV_SECRETS_USER_DIR\Secrets.ps1")
+            $secretsDirList | Should -Be @("$env:VENVIT_DIR\Secrets\secrets.ps1", "~\VenvIt\Secrets\secrets.ps1")
         }
 
-        It "Should only copy VENV_SECRETS_DEFAULT_DIR secrets files" {
-            $secretsPath = Join-Path -Path $env:VENV_SECRETS_DEFAULT_DIR -ChildPath (Get-SecretsFileName)
+        It "Should only copy VENVIT_DIR\Secrets secrets files" {
+            $secretsPath = Join-Path -Path "$env:VENVIT_DIR\Secrets" -ChildPath (Get-SecretsFileName)
             Remove-Item -Path $secretsPath -Recurse -Force | Out-Null
 
             $secretsDirList = Publish-Secrets -UpgradeScriptDir $upgradeDetail.Dir
 
-            $secretsDirList | Should -Be @("$env:VENV_SECRETS_DEFAULT_DIR\Secrets.ps1")
+            $secretsDirList | Should -Be @("$env:VENVIT_DIR\Secrets\secrets.ps1")
         }
 
         AfterEach {

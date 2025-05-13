@@ -297,7 +297,7 @@ Describe "Utils.Test.ps1: Function Tests" {
         It 'Creates a virtual environment' {
             $pythonVenvPAth = Install-PythonVirtualEnv -Major $major -Minor $minor -Patch $patch
 
-            # $pythonVenvPath = Join-Path -Path $pythonVenvDir -ChildPath "scripts/python.exe"
+            # $pythonVenvPath = Join-Path -Path $pythonVenvDir -ChildPath "scripts\python.exe"
             Test-Path $pythonVenvPath | Should -Be $true
         }
     }

@@ -1,38 +1,38 @@
 ﻿# Utils.psm1
 
 $defEnvVarSet_0_0_0 = @{
-    ENVIRONMENT = @{ DefVal = "loc_dev"; IsDir = $false }
-    RTE_ENVIRONMENT = @{ DefVal = "loc_dev"; IsDir = $false }
-    SCRIPTS_DIR = @{ DefVal = "D:\Batch"; IsDir = $true }
-    SECRETS_DIR = @{ DefVal = "D:\Batch"; IsDir = $true }
-    VENV_BASE_DIR = @{ DefVal = "d:\venv"; IsDir = $true }
+    ENVIRONMENT          = @{ DefVal = "loc_dev"; IsDir = $false }
+    RTE_ENVIRONMENT      = @{ DefVal = "loc_dev"; IsDir = $false }
+    SCRIPTS_DIR          = @{ DefVal = "D:\Batch"; IsDir = $true }
+    SECRETS_DIR          = @{ DefVal = "D:\Batch"; IsDir = $true }
+    VENV_BASE_DIR        = @{ DefVal = "d:\venv"; IsDir = $true }
     VENV_PYTHON_BASE_DIR = @{ DefVal = "c:\Python"; IsDir = $true }
 }
 $defEnvVarSet_6_0_0 = @{
-    PROJECT_NAME = @{ DefVal = $null; IsDir = $false }
-    PROJECTS_BASE_DIR = @{ DefVal = "~\Projects"; IsDir = $true }
-    VENV_BASE_DIR = @{ DefVal = "~\venv"; IsDir = $true }
-    VENV_CONFIG_DIR = @{ DefVal = "$env:ProgramFiles\VenvIt\Config"; IsDir = $true }
-    VENV_ENVIRONMENT = @{ DefVal = "loc_dev"; IsDir = $false }
+    PROJECT_NAME           = @{ DefVal = $null; IsDir = $false }
+    PROJECTS_BASE_DIR      = @{ DefVal = "~\Projects"; IsDir = $true }
+    VENV_BASE_DIR          = @{ DefVal = "~\venv"; IsDir = $true }
+    VENV_CONFIG_DIR        = @{ DefVal = "$env:ProgramFiles\VenvIt\Config"; IsDir = $true }
+    VENV_ENVIRONMENT       = @{ DefVal = "loc_dev"; IsDir = $false }
     VENV_ORGANIZATION_NAME = @{ DefVal = $null; IsDir = $false }
-    VENV_PYTHON_BASE_DIR = @{ DefVal = "c:\Python"; IsDir = $true }
-    VENV_SECRETS_DIR = @{ DefVal = "$env:ProgramFiles\VenvIt\Secrets"; IsDir = $true }
-    VENVIT_DIR = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true }
-    VIRTUAL_ENV = @{ DefVal = $null; IsDir = $false }
+    VENV_PYTHON_BASE_DIR   = @{ DefVal = "c:\Python"; IsDir = $true }
+    VENV_SECRETS_DIR       = @{ DefVal = "$env:ProgramFiles\VenvIt\Secrets"; IsDir = $true }
+    VENVIT_DIR             = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true }
+    VIRTUAL_ENV            = @{ DefVal = $null; IsDir = $false }
 }
 $defEnvVarSet_7_0_0 = @{
-    PROJECT_NAME = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 10; Prefix = $false }
-    PROJECTS_BASE_DIR = @{ DefVal = "~\Projects"; IsDir = $true; SystemMandatory = $true; ReadOrder = 6; Prefix = $false }
-    VENV_BASE_DIR = @{ DefVal = "~\venv"; IsDir = $true; SystemMandatory = $true; ReadOrder = 7; Prefix = $false }
-    VENV_CONFIG_DEFAULT_DIR = @{ DefVal = "Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 2; Prefix = "VENVIT_DIR" }
-    VENV_CONFIG_USER_DIR = @{ DefVal = "~\VenvIt\Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 4; Prefix = $false }
-    VENV_ENVIRONMENT = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $true; ReadOrder = 9; Prefix = $false }
+    PROJECT_NAME           = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 10; Prefix = $false }
+    PROJECTS_BASE_DIR      = @{ DefVal = "~\Projects"; IsDir = $true; SystemMandatory = $true; ReadOrder = 6; Prefix = $false }
+    VENV_BASE_DIR          = @{ DefVal = "~\venv"; IsDir = $true; SystemMandatory = $true; ReadOrder = 7; Prefix = $false }
+    # VENV_CONFIG_DEFAULT_DIR  = @{ DefVal = "Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 2; Prefix = "VENVIT_DIR" }
+    # VENV_CONFIG_USER_DIR = @{ DefVal = "~\VenvIt\Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 4; Prefix = $false }
+    VENV_ENVIRONMENT       = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $true; ReadOrder = 9; Prefix = $false }
     VENV_ORGANIZATION_NAME = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 11; Prefix = $false }
-    VENV_PYTHON_BASE_DIR = @{ DefVal = "c:\Python"; IsDir = $true; SystemMandatory = $true; ReadOrder = 8; Prefix = $false }
-    VENV_SECRETS_DEFAULT_DIR = @{ DefVal = "Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 3; Prefix = "VENVIT_DIR" }
-    VENV_SECRETS_USER_DIR = @{ DefVal = "~\VenvIt\Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 5; Prefix = $false }
-    VENVIT_DIR = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = $false }
-    VIRTUAL_ENV = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 12; Prefix = $false }
+    VENV_PYTHON_BASE_DIR   = @{ DefVal = "c:\Python"; IsDir = $true; SystemMandatory = $true; ReadOrder = 8; Prefix = $false }
+    # VENV_SECRETS_DEFAULT_DIR = @{ DefVal = "Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 3; Prefix = "VENVIT_DIR" }
+    # VENV_SECRETS_USER_DIR = @{ DefVal = "~\VenvIt\Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 5; Prefix = $false }
+    VENVIT_DIR             = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = $false }
+    VIRTUAL_ENV            = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 12; Prefix = $false }
 }
 $sourceFileCompleteList = @(
     "LICENSE",
@@ -82,7 +82,7 @@ function Backup-ArchiveOldVersion {
         $fileList = $env:VENVIT_DIR, $env:VENV_CONFIG_DIR, $env:VENV_SECRETS_DIR
     }
     elseif ($archiveVersion -eq "7.0.0") {
-        $fileList = $env:VENVIT_DIR, $env:VENV_CONFIG_DEFAULT_DIR, $env:VENV_CONFIG_USER_DIR, $env:VENV_SECRETS_DEFAULT_DIR, $env:VENV_SECRETS_USER_DIR
+        $fileList = $env:VENVIT_DIR, "$env:VENVIT_DIR\Config", "~\VenvIt\Config", "$env:VENVIT_DIR\Secrets", "~\VenvIt\Secrets"
     }
 
     if ($fileList) {
@@ -94,9 +94,9 @@ function Backup-ArchiveOldVersion {
         }
         $destinationPath = Join-Path -Path $DestinationDir -Child ("VEnvIt_$archiveVersion" + "_" + "$TimeStamp.zip")
         $compress = @{
-            Path = $fileList
+            Path             = $fileList
             CompressionLevel = "Fastest"
-            DestinationPath = $destinationPath
+            DestinationPath  = $destinationPath
         }
         Compress-Archive @compress | Out-Null -ErrorAction SilentlyContinue
     }
@@ -254,7 +254,7 @@ function Install-PythonRepository {
             Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
         }
         Start-Process -FilePath $installerPath `
-            -ArgumentList "/quiet /passive TargetDir=$pythonMiorVersionDir /Include_debug=1 Include_launcher=0 Include_symbols=1 /log $env:TEMP/mypyinstall.log" `
+            -ArgumentList "/quiet /passive TargetDir=$pythonMiorVersionDir /Include_debug=1 Include_launcher=0 Include_symbols=1 /log $env:TEMP\mypyinstall.log" `
             -Wait -NoNewWindow
     }
     return $pythonMiorVersionDir
@@ -268,7 +268,7 @@ function Install-PythonVirtualEnv {
         [string]$Patch = "3"
     )
 
-    $venvItTargetDir = (Join-Path -Path $env:APPDATA -ChildPath "VEnvIt_venv")
+    $venvItTargetDir = (Join-Path -Path "~\VenvIt" -ChildPath "venv")
     $pythonMiorVersionDir = Join-Path -Path $env:VENV_PYTHON_BASE_DIR -ChildPath ("Python$Major$Minor")
     $pythonRepoPath = Join-Path -Path $pythonMiorVersionDir -ChildPath "python.exe"
 
@@ -293,7 +293,7 @@ function Invoke-Script {
     param (
         [string]$ScriptPath,
         [string[]]$Arguments = $null
-    # [switch]$Verbose = $false
+        # [switch]$Verbose = $false
     )
     Write-Verbose "Command: $ScriptPath $Arguments"
     & $ScriptPath $Arguments
@@ -316,12 +316,12 @@ function Show-EnvironmentVariables {
     Write-Host "System Environment Variables" -ForegroundColor Green
     Write-Host "PROJECTS_BASE_DIR:        $env:PROJECTS_BASE_DIR"
     Write-Host "VENV_BASE_DIR:            $env:VENV_BASE_DIR"
-    Write-Host "VENV_CONFIG_DEFAULT_DIR:  $env:VENV_CONFIG_DEFAULT_DIR"
-    Write-Host "VENV_CONFIG_USER_DIR:     $env:VENV_CONFIG_USER_DIR"
+    # Write-Host "VENV_CONFIG_DEFAULT_DIR:  $env:VENV_CONFIG_DEFAULT_DIR"
+    # Write-Host "VENV_CONFIG_USER_DIR:     $env:VENV_CONFIG_USER_DIR"
     Write-Host "VENV_ENVIRONMENT:         $env:VENV_ENVIRONMENT"
     Write-Host "VENV_PYTHON_BASE_DIR:     $env:VENV_PYTHON_BASE_DIR"
-    Write-Host "VENV_SECRETS_DEFAULT_DIR: $env:VENV_SECRETS_DEFAULT_DIR"
-    Write-Host "VENV_SECRETS_USER_DIR:    $env:VENV_SECRETS_USER_DIR"
+    # Write-Host "VENV_SECRETS_DEFAULT_DIR: $env:VENV_SECRETS_DEFAULT_DIR"
+    # Write-Host "VENV_SECRETS_USER_DIR:    $env:VENV_SECRETS_USER_DIR"
     Write-Host "VENVIT_DIR:               $env:VENVIT_DIR"
     Write-Host ""
     Write-Host "Project Environment Variables" -ForegroundColor Green

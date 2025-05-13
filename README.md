@@ -1,16 +1,21 @@
 # VEnvIt
 
-| **Category** | **Status' and Links** |
+| **Category** | **Status' and Links**                                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| General | \[![][maintenance_y_img]\][maintenance_y_lnk] \[![][semver_pic]\][semver_link] |
-| CI | \[![][pre_commit_ci_img]\][pre_commit_ci_lnk] \[![][codecov_img]\][codecov_lnk] \[![][gha_docu_img]\][gha_docu_lnk] |
-| Github | \[![][gh_issues_img]\][gh_issues_lnk] \[![][gh_language_img]\][gh_language_lnk] \[![][gh_last_commit_img]\][gh_last_commit_lnk] |
+| General      | \[![][maintenance_y_img]\][maintenance_y_lnk] \[![][semver_pic]\][semver_link]                                                  |
+| CI           | \[![][pre_commit_ci_img]\][pre_commit_ci_lnk] \[![][codecov_img]\][codecov_lnk] \[![][gha_docu_img]\][gha_docu_lnk]             |
+| Github       | \[![][gh_issues_img]\][gh_issues_lnk] \[![][gh_language_img]\][gh_language_lnk] \[![][gh_last_commit_img]\][gh_last_commit_lnk] |
 
 VEnvIt is a utility that employs Python and PowerShell scripts to create, initialize, and remove virtual environments tailored for both development and production systems. It provides significant flexibility, allowing users to configure their environments according to specific requirements.
 
 Instead of relying on traditional configuration files (INI, TOML, JSON), VEnvIt uses user-modifiable scripts for settings configuration. This design choice offers greater flexibility and adaptability, enabling fine-grained customization that standard configuration files cannot accommodate.
 
 However, this approach introduces additional complexity and requires a thorough understanding of the application's workings. Proficiency in Python and PowerShell scripting is essential to effectively utilize and configure VEnvIt.
+
+Is this a Python or a PowerShell project? Thechnically it is both. As much As I would like it to be rather a Python project, PowerShell is essential:
+
+- The assumption is that their is no native Python installation on the machine (see step Instlaation, Step 2 below). The app must be kick-started from somewhere, so PowerSeell seems to be the right choice.
+- The instlaation manipulate the environment variables of the current session. This is tricky if not impossible with Python only. PowerShell sorts this out.
 
 ## Key Features
 
@@ -136,14 +141,14 @@ When you create a new virtual environment using `vn.ps1`, it generates additiona
 ### Script Descriptions
 
 1. **`VEnv<ProjectName>Install.ps1`**: Contains special instructions for installing this virtual environment. It is only called by `vn.ps1`. The initial default version can be updated for subsequent runs.
-2. **`VEnv<ProjectName>EnvVar.ps1`**: Sets environment variables for the project.
-3. **`VEnv<ProjectName>Setup_custom.ps1`**: Contains special instructions for setting up the virtual environment.
-4. **`Secrets.ps1`**: Contains instructions for setting secrets for the project. Created in both the default and user secrets directories (`VENV_SECRETS_DEFAULT_DIR` and `VENV_SECRETS_USER_DIR`).
+1. **`VEnv<ProjectName>EnvVar.ps1`**: Sets environment variables for the project.
+1. **`VEnv<ProjectName>Setup_custom.ps1`**: Contains special instructions for setting up the virtual environment.
+1. **`Secrets.ps1`**: Contains instructions for setting secrets for the project. Created in both the default and user secrets directories (`VENVIT_DIR\Secrets` and `~\VenvIt\Secrets`).
 
 ### Script Locations
 
 - **Default Configuration Directory (`VENV_CONFIG_DEFAULT_DIR`)**: This directory typically resides on a shared drive, preferably as a subdirectory of the main installation directory (`VENVIT_DIR`). It contains organization-wide scripts.
-- **User Configuration Directory (`VENV_CONFIG_USER_DIR`)**: This directory typically resides on the local drive of the developer's machine and should only be accessible to the current user/environment. Scripts here override those in the default directory.
+- **User Configuration Directory (`~\VenvIt\Config`)**: This directory typically resides on the local drive of the developer's machine and should only be accessible to the current user/environment. Scripts here override those in the default directory.
 
 ### Script Management
 
@@ -154,27 +159,27 @@ When you create a new virtual environment using `vn.ps1`, it generates additiona
 
 VEnvIt utilizes several environment variables to manage virtual environments effectively. These variables should be set during installation.
 
-| Environment Variable | Description |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **PROJECTS_BASE_DIR** | The parent/base directory for all projects (e.g., `C:\Projects`). Organize repositories by organization, such as personal projects and organizational projects (e.g., `C:\Projects\MyOrg\MyProject`, `C:\Projects\Company\CompanyProject`). |
-| **VENV_BASE_DIR** | The directory where the Python virtual environments are stored (e.g., `~\venv`). Unlike the conventional practice of keeping virtual environment files within the project directory, all virtual environments are stored together in this dedicated directory. |
-| **VENV_CONFIG_DEFAULT_DIR** | Directory for default (organization-wide) configuration scripts. Typically a subdirectory of `VENVIT_DIR` (e.g., `$VENVIT_DIR\Configs`). Shared among all developers. |
-| **VENV_CONFIG_USER_DIR** | Directory for user-specific configuration scripts (e.g., `~\VEnvIt\Configs`). Should only be accessible to the current user/machine. Scripts here override those in the default directory. |
-| **VENV_ENVIRONMENT** | Identifies the working environment. Possible values include `loc_dev`, `github_dev`, `prod`, or other values defined by the organization. This variable may be set differently in various environments. The default is set in `$VENV_CONFIG_DEFAULT_DIR\VEnv<ProjectName>EnvVar.ps1` and can be overridden in `$VENV_CONFIG_USER_DIR\VEnv<ProjectName>EnvVar.ps1`. |
-| **VENV_PYTHON_BASE_DIR** | Directory for Python base installations (e.g., `C:\Python`). Different versions of Python are accessed during the creation of virtual environments (e.g., `C:\Python\Python35`, `C:\Python\Python312`). |
-| **VENV_SECRETS_DEFAULT_DIR** | Directory for default (organization-wide) secrets scripts for the current environment as per `VENV_ENVIRONMENT` (e.g., `$VENVIT_DIR\Secrets`). Contents are accessible to all who have access to the installation. |
-| **VENV_SECRETS_USER_DIR** | Directory for user-specific secrets scripts for the current environment (e.g., `~\VEnvIt\Secrets`). Contents are private and should not be shared or pushed to repositories. Scripts here override those in the default directory. |
-| **VENVIT_DIR** | Installation directory where VEnvIt scripts reside (e.g., `C:\VEnvIt`). In an organizational setup, this should be a shared drive. |
+| Environment Variable        | Description                                                                                                                                                                                                                                                                                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **PROJECTS_BASE_DIR**       | The parent/base directory for all projects (e.g., `C:\Projects`). Organize repositories by organization, such as personal projects and organizational projects (e.g., `C:\Projects\MyOrg\MyProject`, `C:\Projects\Company\CompanyProject`).                                                                                                                  |
+| **VENV_BASE_DIR**           | The directory where the Python virtual environments are stored (e.g., `~\venv`). Unlike the conventional practice of keeping virtual environment files within the project directory, all virtual environments are stored together in this dedicated directory.                                                                                               |
+| **VENV_CONFIG_DEFAULT_DIR** | Directory for default (organization-wide) configuration scripts. Typically a subdirectory of `VENVIT_DIR` (e.g., `$VENVIT_DIR\Configs`). Shared among all developers.                                                                                                                                                                                        |
+| **~\\VenvIt\\Config**       | Directory for user-specific configuration scripts (e.g., `~\VEnvIt\Configs`). Should only be accessible to the current user/machine. Scripts here override those in the default directory.                                                                                                                                                                   |
+| **VENV_ENVIRONMENT**        | Identifies the working environment. Possible values include `loc_dev`, `github_dev`, `prod`, or other values defined by the organization. This variable may be set differently in various environments. The default is set in `$VENV_CONFIG_DEFAULT_DIR\VEnv<ProjectName>EnvVar.ps1` and can be overridden in `~\VenvIt\Config\VEnv<ProjectName>EnvVar.ps1`. |
+| **VENV_PYTHON_BASE_DIR**    | Directory for Python base installations (e.g., `C:\Python`). Different versions of Python are accessed during the creation of virtual environments (e.g., `C:\Python\Python35`, `C:\Python\Python312`).                                                                                                                                                      |
+| **VENVIT_DIR\\Secrets**     | Directory for default (organization-wide) secrets scripts for the current environment as per `VENV_ENVIRONMENT` (e.g., `$VENVIT_DIR\Secrets`). Contents are accessible to all who have access to the installation.                                                                                                                                           |
+| **~\\VenvIt\\Secrets**      | Directory for user-specific secrets scripts for the current environment (e.g., `~\VEnvIt\Secrets`). Contents are private and should not be shared or pushed to repositories. Scripts here override those in the default directory.                                                                                                                           |
+| **VENVIT_DIR**              | Installation directory where VEnvIt scripts reside (e.g., `C:\VEnvIt`). In an organizational setup, this should be a shared drive.                                                                                                                                                                                                                           |
 
-# Server Installation
+# Shared Installation
 
-To install VEnvIt on a server, follow these steps:
+To install a shared version of VEnvIt, follow these steps:
 
 1. **Set Environment Variables**: Decide on the values for the system environment variables listed above and set them accordingly.
 
-2. **Remove Existing Python Installations**: Remove any native Python installations and ensure that any references to Python installations are removed from the `PATH` environment variable. This step is vital for successful operation.
+1. **Remove Existing Python Installations**: Remove any native Python installations and ensure that any references to Python installations are removed from the `PATH` environment variable. This step is vital for successful operation.
 
-3. **Install Python Versions**: Install the various versions of Python you intend to use (e.g., `C:\Python\Python39`, `C:\Python\Python312`). During installation, use the following settings:
+1. **Install Python Versions**: Install the various versions of Python you intend to use (e.g., `C:\Python\Python39`, `C:\Python\Python312`). During installation, use the following settings:
 
    - **Do Not** select "Use admin privileges when installing py.exe."
    - **Do Not** add `python.exe` to the `PATH`.
@@ -188,9 +193,9 @@ To install VEnvIt on a server, follow these steps:
    - **Select** "Download debug binaries (requires VS 2017 or later)."
    - Change the "Customize install location" to your desired directory (e.g., `C:\Python\Python310`).
 
-4. **Ensure Shared Directory Exists**: The shared directory `VENVIT_DIR` must exist and be accessible.
+1. **Ensure Shared Directory Exists**: The shared directory `VENVIT_DIR` must exist and be accessible.
 
-5. **Run Installation Script**: Open a new PowerShell window **with Administrator rights**. Do not use an existing one. Paste the following script into the PowerShell window:
+1. **Run Installation Script**: Open a new PowerShell window **with Administrator rights**. Do not use an existing one. Paste the following script into the PowerShell window:
 
    ```powershell
    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
@@ -199,16 +204,16 @@ To install VEnvIt on a server, follow these steps:
    $UpgradeScriptPath = Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "Installation-Files.zip"
    Invoke-WebRequest "https://github.com/BrightEdgeeServices/venvit/releases/download/$Tag/Installation-Files.zip" -OutFile $UpgradeScriptPath
    Expand-Archive -Path $UpgradeScriptPath -DestinationPath $UpgradeScriptDir
-   Import-Module -Name (Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "src/Install-Conclude.psm1")
+   Import-Module -Name (Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "src\Install-Conclude.psm1")
    Invoke-ConcludeInstall -Release $Tag -UpgradeScriptDir $UpgradeScriptDir
    ```
 
-6. **Configure Secrets Scripts**: Configure the `Secrets.ps1` script in both `VENV_SECRETS_DEFAULT_DIR` and `VENV_SECRETS_USER_DIR`:
+1. **Configure Secrets Scripts**: Configure the `Secrets.ps1` script in both `VENVIT_DIR\Secrets` and `~\VenvIt\Secrets`:
 
    - Set the ports for the various Docker containers.
    - Set environment variables for secrets (e.g., `$env:MY_SECRET = 'AaBbCcDdE'`), ensuring they match configurations in GitHub or other services.
 
-7. **Confirm Installation**:
+1. **Confirm Installation**:
 
    - Open a new PowerShell window.
 

@@ -24,17 +24,17 @@ ______________________________________________________________________
 - Renamed variable names to standards. Not all are done. See https://github.com/PoshCode/PowerShellPracticeAndStyle
 - Introduce Utils.psm1 to hold all common utility functions.
 - Split functions into smaller portions simplifying the code and to allow for more effective testing.
-- Introduce the VENV_CONFIG_DEFAULT_DIR and VENV_CONFIG_USER_DIR environment variables at the expense of VENV_CONFIG_DIR
-- Introduce the VENV_SECRETS_DEFAULT_DIR and VENV_SECRETS_USER_DIR environment variables at the expense of VENV_SECRETS_DIR
+- Introduce the VENV_CONFIG_DEFAULT_DIR and ~\\VenvIt\\Config environment variables at the expense of VENV_CONFIG_DIR
+- Introduce the VENVIT_DIR\\Secrets and ~\\VenvIt\\Secrets environment variables at the expense of VENV_SECRETS_DIR
 - Create the Invoke-Script function to abstract PS function calls to enable better testing.
 
 ## Ticket(s) Included
 
 1. BEE-00037 | VEnvIt | Add Pester Support
-2. BEE-00096 | VEnvIt | Update README with missing information
-3. BEE-00234 | VEnvIt | Improve organizational support
-4. BEE-00269 | VEnvIt | Implement "Uninstall"
-5. BEE-00276 | VEnvIt | Fix broken environment variable values after Pester tests
+1. BEE-00096 | VEnvIt | Update README with missing information
+1. BEE-00234 | VEnvIt | Improve organizational support
+1. BEE-00269 | VEnvIt | Implement "Uninstall"
+1. BEE-00276 | VEnvIt | Fix broken environment variable values after Pester tests
 
 ______________________________________________________________________
 
@@ -43,7 +43,7 @@ ______________________________________________________________________
 ## Ticket(s) Included
 
 1. BEE-00236 | VEnvIt | Set ExecutionPolicy
-2. BEE-00030 | VEnvIt | Add Windows PowerShell Support
+1. BEE-00030 | VEnvIt | Add Windows PowerShell Support
 
 ______________________________________________________________________
 

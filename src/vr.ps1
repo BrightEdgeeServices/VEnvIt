@@ -28,14 +28,14 @@ function New-ProjectArchive {
 
     $timeStamp = Get-Date -Format "yyyyMMddHHmm"
 
-    $archiveDir = Join-Path -Path $env:VENV_CONFIG_USER_DIR -ChildPath "Archive"
+    $archiveDir = Join-Path -Path "~\VenvIt\Config" -ChildPath "Archive"
     $filePostfixToArchive = @(
         "EnvVar",
         "Install",
         "CustomSetup"
     )
     foreach ($postfix in $filePostfixToArchive) {
-        $scriptPath = Join-Path -Path $env:VENV_CONFIG_USER_DIR -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix $postfix)
+        $scriptPath = Join-Path -Path "~\VenvIt\Config" -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix $postfix)
         if (Test-Path -Path $scriptPath) {
             $archivePath = Backup-ScriptToArchiveIfExists -SourcePath $scriptPath -ArchiveDir $archiveDir -TimeStamp $TimeStamp
             Remove-Item -Path $scriptPath -Recurse -Force

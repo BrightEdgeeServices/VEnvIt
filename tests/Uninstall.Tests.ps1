@@ -101,7 +101,7 @@ Describe "Uninstall.Tests.ps1: Function Tests" {
         It "Should remove all source files" {
             Remove-InstallationFiles -InstallationDir $env:VENVIT_DIR
 
-            $fileList = $env:VENVIT_DIR, $env:VENV_CONFIG_DEFAULT_DIR, $env:VENV_CONFIG_USER_DIR, $env:VENV_SECRETS_DEFAULT_DIR, $env:VENV_SECRETS_USER_DIR, $env:VENV_BASE_DIR
+            $fileList = $env:VENVIT_DIR, "$env:VENVIT_DIR\Config", "~\VenvIt\Config", "$env:VENVIT_DIR\Secrets", "~\VenvIt\Secrets", $env:VENV_BASE_DIR
             foreach ( $dir in $fileList) {
                 Test-Path $dir | Should -Be $false
             }

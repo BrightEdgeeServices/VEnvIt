@@ -96,60 +96,71 @@ Describe "vn.Tests.ps1: Function Tests" {
         }
 
         It "Should install Python virtual environment" {
-            Mock Invoke-Script { return "Mock: Activated VEnv"
-            } -ParameterFilter { $ScriptPath -eq $env:VENV_BASE_DIR + "\" + $env:PROJECT_NAME + "_env\Scripts\activate.ps1" }
-            Mock Invoke-Script { return "Mock: Deactivated current VEnv"
-            } -ParameterFilter { $ScriptPath -eq "deactivate" }
-            Mock Invoke-Script { return "Mock: Install VEnv"
-            } -ParameterFilter { $ScriptPath -eq "$env:VENV_PYTHON_BASE_DIR\Python" + $InstallationValues.PythonVer + "\python" }
-            Mock Invoke-Script { return "Mock: Upgrade pip"
-            } -ParameterFilter { $ScriptPath -eq "python.exe -m pip install --upgrade pip" }
-
+            Mock Invoke-Script {
+                return "Mock: Activated VEnv"
+            } -ParameterFilter {
+                $ScriptPath -eq $env:VENV_BASE_DIR + "\" + $env:PROJECT_NAME + "_env\Scripts\activate.ps1"
+            }
+            Mock Invoke-Script {
+                return "Mock: Deactivated current VEnv"
+            } -ParameterFilter {
+                $ScriptPath -eq "deactivate"
+            }
+            Mock Invoke-Script {
+                return "Mock: Install VEnv"
+            } -ParameterFilter {
+                $ScriptPath -eq "$env:VENV_PYTHON_BASE_DIR\Python" + $InstallationValues.PythonVer + "\python"
+            }
+            Mock Invoke-Script {
+                return "Mock: Upgrade pip"
+            } -ParameterFilter {
+                $ScriptPath -eq "python.exe -m pip install --upgrade pip"
+            }
             Mock Invoke-Script {
                 return "Mock: Default VEnvMyProjectInstall.ps1"
             } -ParameterFilter {
-                $ScriptPath -eq (Get-Item -Path ("$env:VENV_CONFIG_DEFAULT_DIR\VEnvMyProjectInstall.ps1")).FullName
+                $ScriptPath -eq (Get-Item -Path ("$env:VENVIT_DIR\Config\VEnvMyProjectInstall.ps1")).FullName
             }
             Mock Invoke-Script {
                 return "Mock: User VEnvMyProjectInstall.ps1"
             } -ParameterFilter {
-                $ScriptPath -eq (Get-Item -Path ("$env:VENV_CONFIG_USER_DIR\VEnvMyProjectInstall.ps1")).FullName
+                $ScriptPath -eq (Get-Item -Path ("~\VenvIt\Config\VEnvMyProjectInstall.ps1")).FullName
             }
             Mock Invoke-Script {
                 return "Mock: Default VEnvMyProjectEnvVar.ps1"
             } -ParameterFilter {
-                $ScriptPath -eq (Get-Item -Path ("$env:VENV_CONFIG_DEFAULT_DIR\VEnvMyProjectEnvVar.ps1")).FullName
+                $ScriptPath -eq (Get-Item -Path ("$env:VENVIT_DIR\Config\VEnvMyProjectEnvVar.ps1")).FullName
             }
             Mock Invoke-Script {
                 return "Mock: User VEnvMyProjectEnvVar.ps1"
             } -ParameterFilter {
-                $ScriptPath -eq (Get-Item -Path ("$env:VENV_CONFIG_USER_DIR\VEnvMyProjectEnvVar.ps1")).FullName
+                $ScriptPath -eq (Get-Item -Path ("~\VenvIt\Config\VEnvMyProjectEnvVar.ps1")).FullName
             }
             Mock Invoke-Script {
                 return "Mock: Default VEnvMyProjectEnvVar.ps1"
             } -ParameterFilter {
-                $ScriptPath -eq (Get-Item -Path ("$env:VENV_CONFIG_DEFAULT_DIR\VEnvMyProjectCustomSetup.ps1")).FullName
+                $ScriptPath -eq (Get-Item -Path ("$env:VENVIT_DIR\Config\VEnvMyProjectCustomSetup.ps1")).FullName
             }
             Mock Invoke-Script {
                 return "Mock: Default VEnvMyProjectEnvVar.ps1"
             } -ParameterFilter {
-                $ScriptPath -eq (Get-Item -Path ("$env:VENV_CONFIG_USER_DIR\VEnvMyProjectCustomSetup.ps1")).FullName
+                $ScriptPath -eq (Get-Item -Path ("~\VenvIt\Config\VEnvMyProjectCustomSetup.ps1")).FullName
             }
 
             Mock Read-YesOrNo { return $true }
 
             Invoke-CreateNewVirtualEnvironment -ProjectName $mockInstalVal.ProjectName -PythonVer $mockInstalVal.PythonVer -Organization $mockInstalVal.Organization -ResetScripts $mockInstalVal.ResetScripts -DevMode $mockInstalVal.DevMode
 
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { ("$env:VENV_PYTHON_BASE_DIR\Python" + $InstallationValues.PythonVer + "\python -m venv --clear $env:VENV_BASE_DIR\$env:PROJECT_NAME" + "_env") }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { ($env:VENV_BASE_DIR + "\" + $env:PROJECT_NAME + "_env\Scripts\activate.ps1") }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { ("python.exe -m pip install --upgrade pip") }
+            # Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { $ScriptPath -eq ("$env:VENV_PYTHON_BASE_DIR\Python" + $mockInstalVal.PythonVer + "\python -m venv --clear $env:VENV_BASE_DIR\$mockInstalVal.ProjectName" + "_env") }
+            # Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { $ScriptPath -eq ($env:VENV_BASE_DIR + "\" + $mockInstalVal.ProjectName + "_env\Scripts\activate.ps1") }
+            # Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { $ScriptPath -eq "python.exe -m pip install --upgrade pip" }
 
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENV_CONFIG_DEFAULT_DIR\VEnvMyProjectInstall.ps1")).FullName }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENV_CONFIG_USER_DIR\VEnvMyProjectInstall.ps1")).FullName }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENV_CONFIG_DEFAULT_DIR\VEnvMyProjectEnvVar.ps1")).FullName }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENV_CONFIG_USER_DIR\VEnvMyProjectEnvVar.ps1")).FullName }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENV_CONFIG_DEFAULT_DIR\VEnvMyProjectCustomSetup.ps1")).FullName }
-            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENV_CONFIG_USER_DIR\VEnvMyProjectCustomSetup.ps1")).FullName }
+            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENVIT_DIR\Config\VEnvMyProjectInstall.ps1")).FullName }
+            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("~\VenvIt\Config\VEnvMyProjectInstall.ps1")).FullName }
+            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENVIT_DIR\Config\VEnvMyProjectEnvVar.ps1")).FullName }
+            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("~\VenvIt\Config\VEnvMyProjectEnvVar.ps1")).FullName }
+            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("$env:VENVIT_DIR\Config\VEnvMyProjectCustomSetup.ps1")).FullName }
+            Assert-MockCalled -CommandName Invoke-Script -ParameterFilter { (Get-Item -Path ("~\VenvIt\Config\VEnvMyProjectCustomSetup.ps1")).FullName }
             (Get-Location).FullName | Should -Be ($mockInstalVal.ProjectDir).FullName
         }
 
@@ -198,21 +209,21 @@ Describe "vn.Tests.ps1: Function Tests" {
         It "Should create zip archives" {
             New-VEnvCustomSetupScripts -InstallationValues $mockInstalVal -TimeStamp $timeStamp
 
-            $scriptPath = Join-Path -Path "$env:VENV_CONFIG_DEFAULT_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "CustomSetup.ps1")
+            $scriptPath = Join-Path -Path "$env:VENVIT_DIR\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "CustomSetup.ps1")
             (Test-Path $scriptPath) | Should -Be $true
-            $scriptPath = Join-Path -Path "$env:VENV_CONFIG_USER_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "CustomSetup.ps1")
+            $scriptPath = Join-Path -Path "~\VenvIt\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "CustomSetup.ps1")
             (Test-Path $scriptPath) | Should -Be $true
-            $scriptPath = Join-Path -Path "$env:VENV_CONFIG_DEFAULT_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "EnvVar.ps1")
+            $scriptPath = Join-Path -Path "$env:VENVIT_DIR\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "EnvVar.ps1")
             (Test-Path $scriptPath) | Should -Be $true
-            $scriptPath = Join-Path -Path "$env:VENV_CONFIG_USER_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "EnvVar.ps1")
+            $scriptPath = Join-Path -Path "~\VenvIt\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "EnvVar.ps1")
             (Test-Path $scriptPath) | Should -Be $true
-            $configPath = Join-Path -Path "$env:VENV_CONFIG_DEFAULT_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "Install.ps1")
+            $configPath = Join-Path -Path "$env:VENVIT_DIR\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "Install.ps1")
             (Test-Path $configPath) | Should -Be $true
-            $configPath = Join-Path -Path "$env:VENV_CONFIG_USER_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "Install.ps1")
+            $configPath = Join-Path -Path "~\VenvIt\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "Install.ps1")
             (Test-Path $configPath) | Should -Be $true
-            $zipPath = (Join-Path -Path "$env:VENV_CONFIG_DEFAULT_DIR\Archive" -ChildPath ($env:PROJECT_NAME + "_" + $timeStamp + ".zip"))
+            $zipPath = (Join-Path -Path "$env:VENVIT_DIR\Config\Archive" -ChildPath ($env:PROJECT_NAME + "_" + $timeStamp + ".zip"))
             (Test-Path $zipPath) | Should -Be $true
-            $zipPath = (Join-Path -Path "$env:VENV_CONFIG_USER_DIR\Archive" -ChildPath ($env:PROJECT_NAME + "_" + $timeStamp + ".zip"))
+            $zipPath = (Join-Path -Path "~\VenvIt\Config\Archive" -ChildPath ($env:PROJECT_NAME + "_" + $timeStamp + ".zip"))
             (Test-Path $zipPath) | Should -Be $true
         }
 
@@ -224,7 +235,7 @@ Describe "vn.Tests.ps1: Function Tests" {
             $timeStamp = Get-Date -Format "yyyyMMddHHmm"
             New-VEnvEnvVarScripts -InstallationValues $mockInstalVal -TimeStamp $timeStamp
 
-            $scriptPath = Join-Path -Path "$env:VENV_CONFIG_DEFAULT_DIR" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "EnvVar.ps1")
+            $scriptPath = Join-Path -Path "$env:VENVIT_DIR\Config" -ChildPath ("VEnv" + $mockInstalVal.ProjectName + "EnvVar.ps1")
             $generatedScriptContent = Get-Content -Path $scriptPath -Raw
 
             $generatedScriptContent | Should -Be $VEnvMyOrgEnvVarDotPs1

@@ -68,14 +68,14 @@ Describe "vr.Tests.ps1: Function Tests" {
 
             $archivePath | Should -Be (
                 Join-Path -Path (
-                    Join-Path -Path $env:VENV_CONFIG_USER_DIR -ChildPath "Archive"
+                    Join-Path -Path "~\VenvIt\Config" -ChildPath "Archive"
                 ) -ChildPath ($env:PROJECT_NAME + "_" + $TimeStamp + ".zip")
             )
-            $scriptPath = Join-Path -Path $env:VENV_CONFIG_USER_DIR -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")
+            $scriptPath = Join-Path -Path "~\VenvIt\Config" -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")
             (Test-Path -Path $scriptPath) | Should -Be $false
-            $scriptPath = Join-Path -Path $env:VENV_CONFIG_USER_DIR -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix "Install")
+            $scriptPath = Join-Path -Path "~\VenvIt\Config" -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix "Install")
             (Test-Path -Path $scriptPath) | Should -Be $false
-            $scriptPath = Join-Path -Path $env:VENV_CONFIG_USER_DIR -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")
+            $scriptPath = Join-Path -Path "~\VenvIt\Config" -ChildPath (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")
             (Test-Path -Path $scriptPath) | Should -Be $false
         }
 
@@ -106,13 +106,17 @@ Describe "vr.Tests.ps1: Function Tests" {
             Test-Path env:PROJECT_NAME | Should -Be $false
             (Get-Item -Path ("env:PROJECTS_BASE_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\Projects")
             (Get-Item -Path ("env:VENV_BASE_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\venv")
-            (Get-Item -Path ("env:VENV_CONFIG_DEFAULT_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\Config")
-            (Get-Item -Path ("env:VENV_CONFIG_USER_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\VenvIt\Config")
+            # (Get-Item -Path ("env:VENV_CONFIG_DEFAULT_DIR")).Value | Should -Be $null
+            $env:VENV_CONFIG_DEFAULT_DIR | Should -Be $null
+            # (Get-Item -Path ("env:VENV_CONFIG_USER_DIR")).Value | Should -Be $null
+            $env:VENV_CONFIG_USER_DIR | Should -Be $null
             (Get-Item -Path ("env:VENV_ENVIRONMENT")).Value | Should -Be "loc_dev"
             Test-Path env:VENV_ORGANIZATION_NAME | Should -Be $false
             # (Get-Item -Path ("env:VENV_PYTHON_BASE_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\Python")
-            (Get-Item -Path ("env:VENV_SECRETS_DEFAULT_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\Secrets")
-            (Get-Item -Path ("env:VENV_SECRETS_USER_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\VenvIt\Secrets")
+            # (Get-Item -Path ("env:VENV_SECRETS_DEFAULT_DIR")).Value | Should -Be $null
+            $env:VENV_SECRETS_DEFAULT_DIR | Should -Be $null
+            # (Get-Item -Path ("env:VENV_SECRETS_USER_DIR")).Value | Should -Be $null
+            $env:VENV_SECRETS_USER_DIR | Should -Be $null
             (Get-Item -Path ("env:VENVIT_DIR")).Value | Should -Be ($mockInstalVal.TempDir + "\Program Files\VenvIt")
             Test-Path env:VIRTUAL_ENV | Should -Be $false
         }

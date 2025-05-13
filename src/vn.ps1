@@ -241,15 +241,15 @@ function New-VEnvCustomSetupScripts {
         $content += '#$env:MYSQL_PWD = "??"' + "`n"
         $content += '#$env:MYSQL_ROOT_PASSWORD = "??"' + "`n"
         $content += '#$env:MYSQL_TCP_PORT = ??' + "`n"
-        New-SupportScript -BaseDir $env:VENV_CONFIG_DEFAULT_DIR -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
+        New-SupportScript -BaseDir "$env:VENVIT_DIR\Config" -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
 
         $content = 'Write-Host "--------------------------------------------------------------------------------" -ForegroundColor Cyan' + "`n"
         $content += 'Write-Host "Executing $PSCommandPath..." -ForegroundColor Yellow' + "`n"
         $content += "# Insert customized setup commands specific to the user.`n"
         $content += "# Values in this file will override values set by the Organization custom setup script.`n"
-        New-SupportScript -BaseDir $env:VENV_CONFIG_USER_DIR -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
+        New-SupportScript -BaseDir "~\VenvIt\Config" -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
 
-        return @("$env:VENV_CONFIG_DEFAULT_DIR\$fileName", "$env:VENV_CONFIG_USER_DIR\$fileName")
+        return @("$env:VENVIT_DIR\Config\$fileName", "~\VenvIt\Config\$fileName")
     }
 }
 
@@ -271,15 +271,15 @@ function New-VEnvEnvVarScripts {
         $content += '$env:PYTHONPATH = "$env:PROJECT_DIR\.;$env:PROJECT_DIR\src;$env:PROJECT_DIR\tests"' + "`n"
         $content += '$env:VENV_ENVIRONMENT = "' + $env:VENV_ENVIRONMENT + '"'
         $content = $content -replace '\r?\n', "`r`n"
-        New-SupportScript -BaseDir $env:VENV_CONFIG_DEFAULT_DIR -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
+        New-SupportScript -BaseDir "$env:VENVIT_DIR\Config" -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
 
         $content = 'Write-Host "--------------------------------------------------------------------------------" -ForegroundColor Cyan' + "`n"
         $content += 'Write-Host "Executing $PSCommandPath..." -ForegroundColor Yellow' + "`n"
         $content += "# Insert customized setup commands specific to the user.`n"
         $content += "# Values in this file will override values set by the Organization custom setup script.`n"
-        New-SupportScript -BaseDir $env:VENV_CONFIG_USER_DIR -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
+        New-SupportScript -BaseDir "~\VenvIt\Config" -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
 
-        return @("$env:VENV_CONFIG_DEFAULT_DIR\$fileName", "$env:VENV_CONFIG_USER_DIR\$fileName")
+        return @("$env:VENVIT_DIR\Config\$fileName", "~\VenvIt\Config\$fileName")
     }
 }
 
@@ -296,15 +296,15 @@ function New-VEnvInstallScripts {
         $content += 'Write-Host "Executing $PSCommandPath..." -ForegroundColor Yellow' + "`n"
         $content += "git init`n"
         $content += '& ' + $InstallationValues.ProjectDir + "\Install.ps1`n"
-        New-SupportScript -BaseDir $env:VENV_CONFIG_DEFAULT_DIR -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
+        New-SupportScript -BaseDir "$env:VENVIT_DIR\Config" -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
 
         $content = 'Write-Host "--------------------------------------------------------------------------------" -ForegroundColor Cyan' + "`n"
         $content += 'Write-Host "Executing $PSCommandPath..." -ForegroundColor Yellow' + "`n"
         $content += "# Insert customized setup commands specific to the user`n"
         $content += "# Values in this file will override values set by the Organization installation script.`n"
-        New-SupportScript -BaseDir $env:VENV_CONFIG_USER_DIR -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
+        New-SupportScript -BaseDir "~\VenvIt\Config" -FileName $fileName -Content $content -TimeStamp $TimeStamp | Out-Null
 
-        return @("$env:VENV_CONFIG_DEFAULT_DIR\$fileName", "$env:VENV_CONFIG_USER_DIR\$fileName")
+        return @("$env:VENVIT_DIR\Config\$fileName", "~\VenvIt\Config\$fileName")
     }
 }
 
@@ -353,8 +353,8 @@ function Set-Environment {
     $env:PROJECT_NAME = $InstallationValues.ProjectName
     $env:VENV_ORGANIZATION_NAME = $InstallationValues.Organization
     if ($env:VENV_ENVIRONMENT -eq "loc_dev") {
-        Invoke-Script -ScriptPath ("$env:VENV_SECRETS_DEFAULT_DIR\secrets.ps1") | Out-Null
-        Invoke-Script -ScriptPath ("$env:VENV_SECRETS_USER_DIR\secrets.ps1") | Out-Null
+        Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Secrets\secrets.ps1") | Out-Null
+        Invoke-Script -ScriptPath ("~\VenvIt\Secrets\secrets.ps1") | Out-Null
     }
 
     $organizationDir = (Join-Path -Path $env:PROJECTS_BASE_DIR -ChildPath $env:VENV_ORGANIZATION_NAME)

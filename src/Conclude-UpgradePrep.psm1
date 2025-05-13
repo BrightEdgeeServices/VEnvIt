@@ -37,17 +37,17 @@ function Invoke-PrepForUpgrade_6_0_0 {
 function Invoke-PrepForUpgrade_7_0_0 {
     # Apply necessary changes and cleanup to prepare and implement v7.0.0
     # The current installed version is pre v7.0.0
-    $env:VENV_CONFIG_USER_DIR = $env:VENV_CONFIG_DIR | Out-Null
-    $env:VENV_SECRETS_USER_DIR = $env:VENV_SECRETS_DIR | Out-Null
+    # $env:VENV_CONFIG_USER_DIR = $env:VENV_CONFIG_DIR | Out-Null
+    # $env:VENV_SECRETS_USER_DIR = $env:VENV_SECRETS_DIR | Out-Null
 
-    [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:VENV_CONFIG_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
-    [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:VENV_SECRETS_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
+    # [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:VENV_CONFIG_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
+    # [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:VENV_SECRETS_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
 
 
     $postFix = @(@("install", "Install"), @("setup_custom", "CustomSetup"))
     foreach ($postfix in $postFix) {
         $filenameFilter = "venv_*_" + $postFix[0] + ".ps1"
-        $files = Get-ChildItem -Path $env:VENV_CONFIG_USER_DIR -Filter $filenameFilter
+        $files = Get-ChildItem -Path "~\VenvIt\Config" -Filter $filenameFilter
         foreach ($file in $files) {
             $filterRe = "venv_(.+)_" + $postFix[0] + "\.ps1"
             if ($file.Name -match $filterRe) {
