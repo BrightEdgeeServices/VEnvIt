@@ -45,7 +45,7 @@ v070300 = {
     "project_name": "MyProject",
     "projects_base_dir": str(Path(environ.get("USERNAME"), "Projects")),
     "venv_base_dir": str(Path(environ.get("USERNAME"), "venv")),
-    "venv_environment": "loc_dev",
+    "venv_environment": "dev",
     "venv_organization_name": "MyOrg",
     "venv_python_base_dir": r"c:\Python",
     "venvit_dir": str(Path("Program Files", "VenvIt")),

@@ -612,11 +612,11 @@ class TestEnvSetUp:
         env_setup = env_setup_07_02_00_self_destruct
 
         assert env_setup.env_vars.APPDATA == Path(environ.get("APPDATA"))
-        assert env_setup.env_vars.PROJECT_NAME == "ProjectName"
+        assert env_setup.env_vars.PROJECT_NAME == "MyProject"
         assert env_setup.env_vars.PROJECTS_BASE_DIR == Path(environ.get("PROJECTS_BASE_DIR"))
         assert env_setup.env_vars.VENV_BASE_DIR == Path(environ.get("VENV_BASE_DIR"))
         assert env_setup.env_vars.VENV_ENVIRONMENT == "dev"
-        assert env_setup.env_vars.VENV_ORGANIZATION_NAME == "OrgName"
+        assert env_setup.env_vars.VENV_ORGANIZATION_NAME == "MyOrg"
         assert env_setup.env_vars.VENVIT_DIR == Path(environ.get("VENVIT_DIR"))
 
         assert env_setup.env_var_set_def.venv_config_dir is None
@@ -627,14 +627,14 @@ class TestEnvSetUp:
         assert env_setup.env_var_set_def.venv_secrets_user_dir is None
 
         assert env_setup.env_var_set_def.app_data.def_val == Path(environ.get("APPDATA"))
-        assert env_setup.env_var_set_def.project_name.def_val == "ProjectName"
+        assert env_setup.env_var_set_def.project_name.def_val == "MyProject"
         assert env_setup.env_var_set_def.projects_base_dir.def_val == Path(environ.get("PROJECTS_BASE_DIR"))
         assert env_setup.env_var_set_def.venv_base_dir.def_val == Path(environ.get("VENV_BASE_DIR"))
         assert env_setup.env_var_set_def.venv_environment.def_val == "dev"
-        assert env_setup.env_var_set_def.venv_organization_name.def_val == "OrgName"
+        assert env_setup.env_var_set_def.venv_organization_name.def_val == "MyOrg"
         assert env_setup.env_var_set_def.venv_python_base_dir.def_val == Path(environ.get("VENV_PYTHON_BASE_DIR"))
         assert env_setup.env_var_set_def.venvit_dir.def_val == Path(environ.get("VENVIT_DIR"))
-        assert env_setup.env_var_set_def.virtual_env.def_val == "virtual_env"
+        assert env_setup.env_var_set_def.virtual_env.def_val == "hendr\\venv\\MyProject_env"
 
         pass
 
