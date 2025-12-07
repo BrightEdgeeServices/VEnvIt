@@ -1,4 +1,4 @@
-# vi.ps1
+# vs.ps1
 
 param (
     [Parameter(Mandatory = $false, Position = 0)]
@@ -86,7 +86,7 @@ function Show-Help {
 
     # Introduction
     @"
-This script, 'vi.ps1', initializes a Python virtual environment. This include running the
+This script, 'vs.ps1', initializes a Python virtual environment. This include running the
 VEnv${_project_name}CustomSetup .ps1 script.
 "@ | Write-Host
 
@@ -94,8 +94,8 @@ VEnv${_project_name}CustomSetup .ps1 script.
     @"
 Usage:
 ------
-vi.ps1 ProjectName
-vi.ps1 -Help
+vs.ps1 ProjectName
+vs.ps1 -Help
 
 Parameters:
 1. ProjectName: The name of the project.
@@ -119,7 +119,7 @@ if (-not $Pester) {
     Write-Host ''
     Write-Host ''
     $dateTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    Write-Host "=[ START $dateTime ]=================================================[ vi.ps1 ]=" -ForegroundColor Blue
+    Write-Host "=[ START $dateTime ]=================================================[ vs.ps1 ]=" -ForegroundColor Blue
     Write-Host "Initialize the $project_name virtual environment" -ForegroundColor Blue
     if ($ProjectName -eq "" -or $Help) {
         Show-Help
@@ -130,3 +130,4 @@ if (-not $Pester) {
     }
     Write-Host '-[ END ]------------------------------------------------------------------------' -ForegroundColor Cyan
 }
+

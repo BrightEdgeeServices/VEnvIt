@@ -608,8 +608,8 @@ class TestEnvSetUp:
         assert Path(Path.home(), "VEnvIt", "Secrets").exists()
         pass
 
-    def test_env_setup_v070300_init(self, env_setup_07_03_00_self_destruct):
-        env_setup = env_setup_07_03_00_self_destruct
+    def test_env_setup_v070300_init(self, env_setup_07_02_00_self_destruct):
+        env_setup = env_setup_07_02_00_self_destruct
 
         assert env_setup.env_vars.APPDATA == Path(environ.get("APPDATA"))
         assert env_setup.env_vars.PROJECT_NAME == "ProjectName"

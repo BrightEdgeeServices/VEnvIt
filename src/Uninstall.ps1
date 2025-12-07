@@ -64,7 +64,7 @@ function Invoke-Uninstall {
         $archivePath = Backup-ArchiveOldVersion -InstallationDir $InstallationDir -TimeStamp $timeStamp -DestinationDir $BackupDir
         Backup-EnvironmentVariables -DestinationPath $archivePath
         Remove-InstallationFiles -InstallationDir $env:VENVIT_DIR
-        Unpublish-EnvironmentVariables -EnvVarSet $defEnvVarSet_7_0_0
+        Unpublish-EnvironmentVariables -EnvVarSet $envVarRegister
     }
     else {
         $archivePath = $false

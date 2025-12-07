@@ -137,15 +137,16 @@ def env_setup_07_00_00_self_destruct_with_config_files(monkeypatch, env_setup_07
 
 
 @pytest.fixture
-def env_setup_07_03_00_self_destruct(monkeypatch):
-    base_dir = WorkingDir().dir
+def env_setup_07_02_00_self_destruct(monkeypatch):
+    # base_dir = WorkingDir().dir
+    base_dir = Path("C:", "Users", "hendr", "AppData", "Local", "Temp", "VenvIt_d2ccea51-cc64-4767-ac62-4f16a393e4c9")
     app_data: Path = Path(base_dir / test_data.v070300["app_data"])
     project_name: str = test_data.v070300["project_name"]
     projects_base_dir = Path(base_dir / test_data.v070300["projects_base_dir"])
     venv_base_dir = Path(base_dir / test_data.v070300["venv_base_dir"])
     venv_environment: str = test_data.v070300["venv_environment"]
     venv_organization_name: str = test_data.v070300["venv_organization_name"]
-    venv_python_base_dir = Path(base_dir / test_data.v070300["venv_python_base_dir"])
+    venv_python_base_dir = Path(test_data.v070300["venv_python_base_dir"])
     venvit_dir: Path = Path(base_dir / test_data.v070300["venvit_dir"])
     virtual_env = test_data.v070300["virtual_env"]
 

@@ -124,7 +124,7 @@ Describe "Uninstall.Tests.ps1: Function Tests" {
 
             Test-Path $BackupPath | Should -Be $true
 
-            Unpublish-EnvironmentVariables -EnvVarSet $defEnvVarSet_7_0_0
+            Unpublish-EnvironmentVariables -EnvVarSet $envVarRegister
             Set-Location -Path $env:TEMP
             Remove-Item -Path $mockInstalVal.TempDir -Recurse -Force
         }

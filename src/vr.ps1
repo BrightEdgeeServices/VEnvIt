@@ -66,7 +66,7 @@ function Unregister-VirtualEnvironment {
     else {
         Write-Host "Not removed: $venv_dir (does not exist)."
     }
-    Clear-NonSystemMandatoryEnvironmentVariables $defEnvVarSet_7_0_0
+    Clear-NonSystemMandatoryEnvironmentVariables $envVarRegister
 }
 
 

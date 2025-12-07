@@ -25,7 +25,7 @@ class ParseArgs:
             # action="store_true",
             # default=False,
             # choices=upgrade.UpgradeIds().model_dump().keys(),
-            help='Enable add to "master or "main" branches',
+            help="",
         )
         self.parser_upgrade.set_defaults(func=upgrade.Upgrade)
         pass

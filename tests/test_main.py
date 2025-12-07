@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from venvit import __main__
+from venvit import main
 
 
 @pytest.mark.main
@@ -13,7 +13,7 @@ class TestVenvIt:
             ["pytest", "venvit"],
         )
         with pytest.raises(SystemExit):
-            __main__.main()
+            main.main()
         pass
 
     def test_venvit_with_args_upgrade(self, monkeypatch, env_setup_secure_self_destruct):
@@ -24,6 +24,6 @@ class TestVenvIt:
             ["upgrade", env_setup.dir],
         )
         os.chdir(env_setup.dir)
-        __main__.main()
+        main.main()
         assert env_setup.dir
         pass

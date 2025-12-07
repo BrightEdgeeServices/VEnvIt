@@ -1,62 +1,111 @@
 ﻿# Utils.psm1
 
-$defEnvVarSet_0_0_0 = @{
-    ENVIRONMENT          = @{ DefVal = "loc_dev"; IsDir = $false }
-    RTE_ENVIRONMENT      = @{ DefVal = "loc_dev"; IsDir = $false }
-    SCRIPTS_DIR          = @{ DefVal = "D:\Batch"; IsDir = $true }
-    SECRETS_DIR          = @{ DefVal = "D:\Batch"; IsDir = $true }
-    VENV_BASE_DIR        = @{ DefVal = "d:\venv"; IsDir = $true }
-    VENV_PYTHON_BASE_DIR = @{ DefVal = "c:\Python"; IsDir = $true }
+# $envVarRegister_0_0_0 = @{
+#     ENVIRONMENT          = @{ DefVal = "loc_dev"; IsDir = $false }
+#     RTE_ENVIRONMENT      = @{ DefVal = "loc_dev"; IsDir = $false }
+#     SCRIPTS_DIR          = @{ DefVal = "D:\Batch"; IsDir = $true }
+#     SECRETS_DIR          = @{ DefVal = "D:\Batch"; IsDir = $true }
+#     VENV_BASE_DIR        = @{ DefVal = "d:\venv"; IsDir = $true }
+#     VENV_PYTHON_BASE_DIR = @{ DefVal = "c:\Python"; IsDir = $true }
+# }
+# $envVarRegister_6_0_0 = @{
+#     PROJECT_NAME           = @{ DefVal = $null; IsDir = $false }
+#     PROJECTS_BASE_DIR      = @{ DefVal = "~\Projects"; IsDir = $true }
+#     VENV_BASE_DIR          = @{ DefVal = "~\venv"; IsDir = $true }
+#     VENV_CONFIG_DIR        = @{ DefVal = "$env:ProgramFiles\VenvIt\Config"; IsDir = $true }
+#     VENV_ENVIRONMENT       = @{ DefVal = "loc_dev"; IsDir = $false }
+#     VENV_ORGANIZATION_NAME = @{ DefVal = $null; IsDir = $false }
+#     VENV_PYTHON_BASE_DIR   = @{ DefVal = "c:\Python"; IsDir = $true }
+#     VENV_SECRETS_DIR       = @{ DefVal = "$env:ProgramFiles\VenvIt\Secrets"; IsDir = $true }
+#     VENVIT_DIR             = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true }
+#     VIRTUAL_ENV            = @{ DefVal = $null; IsDir = $false }
+# }
+# $envVarRegister_7_0_0 = @{
+#     PROJECT_NAME           = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 10; Prefix = $false }
+#     PROJECTS_BASE_DIR      = @{ DefVal = "~\Projects"; IsDir = $true; SystemMandatory = $true; ReadOrder = 6; Prefix = $false }
+#     VENV_BASE_DIR          = @{ DefVal = "~\venv"; IsDir = $true; SystemMandatory = $true; ReadOrder = 7; Prefix = $false }
+#     VENV_CONFIG_DEFAULT_DIR  = @{ DefVal = "Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 2; Prefix = "VENVIT_DIR" }
+#     VENV_CONFIG_USER_DIR = @{ DefVal = "~\VenvIt\Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 4; Prefix = $false }
+#     VENV_ENVIRONMENT       = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $true; ReadOrder = 9; Prefix = $false }
+#     VENV_ORGANIZATION_NAME = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 11; Prefix = $false }
+#     VENV_PYTHON_BASE_DIR   = @{ DefVal = "c:\Python"; IsDir = $true; SystemMandatory = $true; ReadOrder = 8; Prefix = $false }
+#     VENV_SECRETS_DEFAULT_DIR = @{ DefVal = "Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 3; Prefix = "VENVIT_DIR" }
+#     VENV_SECRETS_USER_DIR = @{ DefVal = "~\VenvIt\Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 5; Prefix = $false }
+#     VENVIT_DIR             = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = $false }
+#     VIRTUAL_ENV            = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 12; Prefix = $false }
+# }
+
+$envVarRegister = @{
+    # Deprecated
+    ENVIRONMENT              = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = "6.0.0" }
+    RTE_ENVIRONMENT          = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = "6.0.0" }
+    SCRIPTS_DIR              = @{ DefVal = "D:\Batch"; IsDir = $true; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = "6.0.0" }
+    SECRETS_DIR              = @{ DefVal = "D:\Batch"; IsDir = $true; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = "6.0.0" }
+    VENV_CONFIG_DEFAULT_DIR  = @{ DefVal = "Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = "VENVIT_DIR"; Deprecated = "7.2.0" }
+    VENV_CONFIG_DIR          = @{ DefVal = "$env:ProgramFiles\VenvIt\Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 0; Prefix = "VENVIT_DIR"; Deprecated = "7.0.0" }
+    VENV_CONFIG_USER_DIR     = @{ DefVal = "~\VenvIt\Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = $false; Deprecated = "7.2.0" }
+    VENV_SECRETS_DEFAULT_DIR = @{ DefVal = "Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = "VENVIT_DIR"; Deprecated = "7.2.0" }
+    VENV_SECRETS_DIR         = @{ DefVal = "$env:ProgramFiles\VenvIt\Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 0; Prefix = "VENVIT_DIR"; Deprecated = "7.0.0" }
+    VENV_SECRETS_USER_DIR    = @{ DefVal = "~\VenvIt\Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = $false; Deprecated = "7.2.0" }
+    # Active
+    PROJECT_NAME             = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    PROJECTS_BASE_DIR        = @{ DefVal = "~\Projects"; IsDir = $true; SystemMandatory = $true; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    VENV_BASE_DIR            = @{ DefVal = "~\venv"; IsDir = $true; SystemMandatory = $true; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    VENV_ENVIRONMENT         = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $true; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    VENV_ORGANIZATION_NAME   = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    VENV_PYTHON_BASE_DIR     = @{ DefVal = "c:\Python"; IsDir = $true; SystemMandatory = $true; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    VENVIT_DIR               = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true; SystemMandatory = $true; ReadOrder = 0; Prefix = $false; Deprecated = $false }
+    VIRTUAL_ENV              = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 0; Prefix = $false; Deprecated = $false }
 }
-$defEnvVarSet_6_0_0 = @{
-    PROJECT_NAME           = @{ DefVal = $null; IsDir = $false }
-    PROJECTS_BASE_DIR      = @{ DefVal = "~\Projects"; IsDir = $true }
-    VENV_BASE_DIR          = @{ DefVal = "~\venv"; IsDir = $true }
-    VENV_CONFIG_DIR        = @{ DefVal = "$env:ProgramFiles\VenvIt\Config"; IsDir = $true }
-    VENV_ENVIRONMENT       = @{ DefVal = "loc_dev"; IsDir = $false }
-    VENV_ORGANIZATION_NAME = @{ DefVal = $null; IsDir = $false }
-    VENV_PYTHON_BASE_DIR   = @{ DefVal = "c:\Python"; IsDir = $true }
-    VENV_SECRETS_DIR       = @{ DefVal = "$env:ProgramFiles\VenvIt\Secrets"; IsDir = $true }
-    VENVIT_DIR             = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true }
-    VIRTUAL_ENV            = @{ DefVal = $null; IsDir = $false }
-}
-$defEnvVarSet_7_0_0 = @{
-    PROJECT_NAME           = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 10; Prefix = $false }
-    PROJECTS_BASE_DIR      = @{ DefVal = "~\Projects"; IsDir = $true; SystemMandatory = $true; ReadOrder = 6; Prefix = $false }
-    VENV_BASE_DIR          = @{ DefVal = "~\venv"; IsDir = $true; SystemMandatory = $true; ReadOrder = 7; Prefix = $false }
-    # VENV_CONFIG_DEFAULT_DIR  = @{ DefVal = "Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 2; Prefix = "VENVIT_DIR" }
-    # VENV_CONFIG_USER_DIR = @{ DefVal = "~\VenvIt\Config"; IsDir = $true; SystemMandatory = $true; ReadOrder = 4; Prefix = $false }
-    VENV_ENVIRONMENT       = @{ DefVal = "loc_dev"; IsDir = $false; SystemMandatory = $true; ReadOrder = 9; Prefix = $false }
-    VENV_ORGANIZATION_NAME = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 11; Prefix = $false }
-    VENV_PYTHON_BASE_DIR   = @{ DefVal = "c:\Python"; IsDir = $true; SystemMandatory = $true; ReadOrder = 8; Prefix = $false }
-    # VENV_SECRETS_DEFAULT_DIR = @{ DefVal = "Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 3; Prefix = "VENVIT_DIR" }
-    # VENV_SECRETS_USER_DIR = @{ DefVal = "~\VenvIt\Secrets"; IsDir = $true; SystemMandatory = $true; ReadOrder = 5; Prefix = $false }
-    VENVIT_DIR             = @{ DefVal = "$env:ProgramFiles\VenvIt"; IsDir = $true; SystemMandatory = $true; ReadOrder = 1; Prefix = $false }
-    VIRTUAL_ENV            = @{ DefVal = $null; IsDir = $false; SystemMandatory = $false; ReadOrder = 12; Prefix = $false }
-}
+
+# $envVarRegister_All = @{
+#     ENVIRONMENT              = @{ IsDir = $false; SystemMandatory = $false }
+#     PROJECTS_BASE_DIR        = @{ IsDir = $true; SystemMandatory = $true }
+#     RTE_ENVIRONMENT          = @{ IsDir = $false; SystemMandatory = $false }
+#     SCRIPTS_DIR              = @{ IsDir = $true; SystemMandatory = $true }
+#     SECRETS_DIR              = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_BASE_DIR            = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_CONFIG_DIR          = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_CONFIG_DEFAULT_DIR  = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_CONFIG_USER_DIR     = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_PYTHON_BASE_DIR     = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_SECRETS_DIR         = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_SECRETS_DEFAULT_DIR = @{ IsDir = $true; SystemMandatory = $true }
+#     VENV_SECRETS_USER_DIR    = @{ IsDir = $true; SystemMandatory = $true }
+#     VENVIT_DIR               = @{ IsDir = $true; SystemMandatory = $true }
+# }
+
 $sourceFileCompleteList = @(
-    "LICENSE",
+    "LICENSE.txt",
     "Manifest.psd1",
     "README.md",
     "ReleaseNotes.md",
     "src\Secrets.ps1",
     "src\Uninstall.ps1",
     "src\Utils.psm1",
-    "src\vi.ps1",
+    "src\vs.ps1",
     "src\vn.ps1",
     "src\vr.ps1"
 )
 $separator = "-" * 80
+
 $sourceFileCopyList = @(
-    "LICENSE",
+    "LICENSE.txt",
+    "pyproject.toml",
     "README.md",
     "ReleaseNotes.md",
     "src\Secrets.ps1",
     "src\Uninstall.ps1",
     "src\Utils.psm1",
-    "src\vi.ps1",
+    "src\vs.ps1",
     "src\vn.ps1",
     "src\vr.ps1"
+    "src\venvit\__init__.py",
+    "src\venvit\main.py",
+    "src\venvit\core\__init__.py",
+    "src\venvit\core\env_setup.py",
+    "src\venvit\upgrade\__init__.py",
+    "src\venvit\upgrade\upgrade.py"
 )
 
 function Backup-ArchiveOldVersion {
@@ -82,7 +131,19 @@ function Backup-ArchiveOldVersion {
         $fileList = $env:VENVIT_DIR, $env:VENV_CONFIG_DIR, $env:VENV_SECRETS_DIR
     }
     elseif ($archiveVersion -eq "7.0.0") {
-        $fileList = $env:VENVIT_DIR, "$env:VENVIT_DIR\Config", "~\VenvIt\Config", "$env:VENVIT_DIR\Secrets", "~\VenvIt\Secrets"
+        $fileList = "$env:VENVIT_DIR\*.*",
+        $env:VENV_CONFIG_DEFAULT_DIR,
+        $env:VENV_CONFIG_USER_DIR,
+        $env:VENV_SECRETS_USER_DIR,
+        $env:VENV_SECRETS_DEFAULT_DIR
+    }
+    elseif ($archiveVersion -ge "7.2.0") {
+        $fileList =
+            "$env:VENVIT_DIR\*.*",
+            "$env:VENVIT_DIR\Config\*.*",
+            "~\VenvIt\Config\*.*",
+            "$env:VENVIT_DIR\Secrets\*.*",
+            "~\VenvIt\Secrets\*.*"
     }
 
     if ($fileList) {
@@ -184,7 +245,13 @@ function Get-ReadAndSetEnvironmentVariables {
 
     $sortedKeys = $EnvVarSet.GetEnumerator() | Sort-Object { $_.Value.ReadOrder }
     foreach ($envVar in $sortedKeys) {
-        if ($EnvVarSet[$envVar.Key]["SystemMandatory"]) {
+        if (($EnvVarSet[$envVar.Key]["SystemMandatory"]) -and (-not( $EnvVarSet[$envVar.Key]["Deprecated"]))) {
+            if ($EnvVarSet[$envVar.Key]["IsDir"]) {
+                $defaultValue = (Join-Path -Path $env:VENV_BASE_DIR -ChildPath $EnvVarSet[$envVar.Key]["DefVal"])
+            }
+            else {
+                $defaultValue = $EnvVarSet[$envVar.Key]["DefVal"]
+            }
             $existingValue = [System.Environment]::GetEnvironmentVariable($envVar.Key, [System.EnvironmentVariableTarget]::Machine)
             if ($existingValue) {
                 $promptText = $envVar.Key + " ($existingValue)"
@@ -217,22 +284,26 @@ function Get-SecretsFileName {
 
 function Get-Version {
     param (
-        [Parameter(Mandatory = $true)]
-        [String]$SourceDir
+        [Parameter(Mandatory = $false)]
+        [String]$SourceDir = $null
     )
     $version = $null
-    if (Test-Path $SourceDir) {
+    $manifestPath = $null
+    if ($SourceDir -and (Test-Path $SourceDir -ErrorAction SilentlyContinue)) {
         $manifestPath = Join-Path -Path $SourceDir -ChildPath (Get-ManifestFileName)
-        if (Test-Path $manifestPath) {
-            $Manifest = Import-PowerShellDataFile -Path $manifestPath
-            $version = [version]$Manifest.ModuleVersion
-        }
-        elseif (Test-Path "env:VENVIT_DIR") {
-            $version = "6.0.0"
-        }
-        elseif (Test-Path "env:SCRIPTS_DIR") {
-            $version = "0.0.0"
-        }
+    }
+    elseif ($env:VENVIT_DIR -and (Test-Path $env:VENVIT_DIR -ErrorAction SilentlyContinue)) {
+        $manifestPath = Join-Path -Path $env:VENVIT_DIR -ChildPath (Get-ManifestFileName)
+    }
+    if (($manifestPath) -and (Test-Path $manifestPath)) {
+        $Manifest = Import-PowerShellDataFile -Path $manifestPath
+        $version = [version]$Manifest.ModuleVersion
+    }
+    elseif ($env:VENVIT_DIR) {
+        $version = "6.0.0"
+    }
+    elseif (Test-Path "env:SCRIPTS_DIR") {
+        $version = "0.0.0"
     }
     return $version
 }
@@ -268,7 +339,7 @@ function Install-PythonVirtualEnv {
         [string]$Patch = "3"
     )
 
-    $venvItTargetDir = (Join-Path -Path "~\VenvIt" -ChildPath "venv")
+    $venvItTargetDir = (Join-Path -Path $env:VENVIT_DIR -ChildPath "venv")
     $pythonMiorVersionDir = Join-Path -Path $env:VENV_PYTHON_BASE_DIR -ChildPath ("Python$Major$Minor")
     $pythonRepoPath = Join-Path -Path $pythonMiorVersionDir -ChildPath "python.exe"
 
@@ -277,14 +348,13 @@ function Install-PythonVirtualEnv {
         return
     }
 
-    Write-Host "Creating virtual environment using Python at '$venvItTargetDir'..."
     & $pythonRepoPath -m venv $venvItTargetDir
 
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "Virtual environment successfully created at: $venvItTargetDir"
+        Write-Host "Virtual environment successfully created at: $venvItTargetDir" -ForegroundColor Green
     }
     else {
-        Write-Error "Failed to create virtual environment."
+        Write-Error "Failed to create virtual environment." -ForegroundColor Red
     }
     return (Join-Path -Path $venvItTargetDir -ChildPath "Scripts\python.exe")
 }
@@ -384,7 +454,7 @@ function Publish-EnvironmentVariables {
 
 function Unpublish-EnvironmentVariables {
     param(
-        [Object]$EnvVarSet
+        [Object]$EnvVarSet = $envVarRegister
     )
     foreach ($envVar in $EnvVarSet.Keys) {
         Set-Item -Path env:$envVar -Value $null
@@ -392,7 +462,7 @@ function Unpublish-EnvironmentVariables {
     }
 }
 
-Export-ModuleMember -Variable defEnvVarSet_7_0_0, separator, sourceFileCompleteList, sourceFileCopyList
+Export-ModuleMember -Variable envVarRegister, separator, sourceFileCompleteList, sourceFileCopyList
 Export-ModuleMember -Function Backup-ArchiveOldVersion, Backup-ScriptToArchiveIfExists, Clear-NonSystemMandatoryEnvironmentVariables
 Export-ModuleMember -Function Confirm-SystemEnvironmentVariablesExist, Copy-Deep, Get-ReadAndSetEnvironmentVariables, Get-ConfigFileName
 Export-ModuleMember -Function Get-ManifestFileName, Get-SecretsFileName, Get-Version, Install-PythonRepository, Install-PythonVirtualEnv
