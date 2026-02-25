@@ -14,7 +14,7 @@ class EnvVarSettingsModel(BaseModel):
     system_mandatory: bool
 
 
-class EnvVarV000000Model(BaseSettings):
+class EnvVarModelV000000(BaseSettings):
     ENVIRONMENT: str = "dev"
     RTE_ENVIRONMENT: str = "dev"
     SCRIPTS_DIR: Path = ""
@@ -24,59 +24,77 @@ class EnvVarV000000Model(BaseSettings):
     VIRTUAL_ENV: str | None = None
 
 
-class EnvVarV060000Model(EnvVarV000000Model):
-    ENVIRONMENT: str = ""  # Deprecated
-    RTE_ENVIRONMENT: str = ""  # Deprecated
-    SCRIPTS_DIR: str = ""  # Deprecated
-    SECRETS_DIR: str = ""  # Deprecated
+class EnvVarModelV060000(BaseSettings):
+    # ENVIRONMENT: str = ""  # Deprecated in 0.6.0
+    # RTE_ENVIRONMENT: str = ""  # Deprecated in 0.6.0
+    # SCRIPTS_DIR: str = ""  # Deprecated in 0.6.0
+    # SECRETS_DIR: str = ""  # Deprecated in 0.6.0
 
     PROJECT_NAME: str = ""
     PROJECTS_BASE_DIR: Path = ""
+    VENV_BASE_DIR: Path = ""
     VENV_CONFIG_DIR: Path = ""
     VENV_ENVIRONMENT: str = ""
     VENV_ORGANIZATION_NAME: str = ""
+    VENV_PYTHON_BASE_DIR: Path = ""
     VENV_SECRETS_DIR: Path = ""
     VENVIT_DIR: Path = ""
+    VIRTUAL_ENV: str | None = None
 
 
-class EnvVarV070000Model(EnvVarV060000Model):
+class EnvVarModelV070000(BaseSettings):
     # ENVIRONMENT deprecated 6.0.0
     # RTE_ENVIRONMENT deprecated 6.0.0
     # SCRIPTS_DIR deprecated 6.0.0
     # SECRETS_DIR deprecated 6.0.0
 
-    environ["VENV_CONFIG_DIR"] = ""
-    environ["VENV_SECRETS_DIR"] = ""
+    environ["VENV_CONFIG_DIR"] = ""  # Deprecated 0.7.0
+    environ["VENV_SECRETS_DIR"] = ""  # Deprecated 0.7.0
+    VENV_CONFIG_DIR: str = ""  # Deprecated 0.7.0
+    VENV_SECRETS_DIR: str = ""  # Deprecated 0.7.0
 
-    VENV_CONFIG_DIR: str = ""  # Deprecated
-    VENV_SECRETS_DIR: str = ""  # Deprecated
-
+    PROJECT_NAME: str = ""
+    PROJECTS_BASE_DIR: Path = ""
+    VENV_BASE_DIR: Path = ""
+    VENV_ENVIRONMENT: str = ""
+    VENV_ORGANIZATION_NAME: str = ""
     VENV_CONFIG_DEFAULT_DIR: Path = ""
     VENV_CONFIG_USER_DIR: Path = ""
+    VENV_PYTHON_BASE_DIR: Path = ""
     VENV_SECRETS_DEFAULT_DIR: Path = ""
     VENV_SECRETS_USER_DIR: Path = ""
+    VENVIT_DIR: Path = ""
+    VIRTUAL_ENV: str | None = None
 
 
-class EnvVarV070300Model(EnvVarV070000Model):
+class EnvVarModelV070300(BaseSettings):
     # ENVIRONMENT deprecated 6.0.0
     # RTE_ENVIRONMENT deprecated 6.0.0
     # SCRIPTS_DIR deprecated 6.0.0
     # SECRETS_DIR deprecated 6.0.0
 
-    # VENV_CONFIG_DIR deprecated 7.0.0
-    # VENV_SECRETS_DIR deprecated 7.0.0
+    # VENV_CONFIG_DIR deprecated 0.7.0
+    # VENV_SECRETS_DIR deprecated 0.7.0
 
-    environ["VENV_CONFIG_DEFAULT_DIR"] = ""
-    environ["VENV_CONFIG_USER_DIR"] = ""
-    environ["VENV_SECRETS_DEFAULT_DIR"] = ""
-    environ["VENV_SECRETS_USER_DIR"] = ""
+    environ["VENV_CONFIG_DEFAULT_DIR"] = ""  # Deprecated 0.7.3
+    environ["VENV_CONFIG_USER_DIR"] = ""  # Deprecated 0.7.3
+    environ["VENV_SECRETS_DEFAULT_DIR"] = ""  # Deprecated 0.7.3
+    environ["VENV_SECRETS_USER_DIR"] = ""  # Deprecated 0.7.3
 
-    VENV_CONFIG_DEFAULT_DIR: str = ""  # Deprecated
-    VENV_CONFIG_USER_DIR: str = ""  # Deprecated
-    VENV_SECRETS_DEFAULT_DIR: str = ""  # Deprecated
-    VENV_SECRETS_USER_DIR: str = ""  # Deprecated
+    VENV_CONFIG_DEFAULT_DIR: str = ""  # Deprecated 0.7.3
+    VENV_CONFIG_USER_DIR: str = ""  # Deprecated 0.7.3
+    VENV_SECRETS_DEFAULT_DIR: str = ""  # Deprecated 0.7.3
+    VENV_SECRETS_USER_DIR: str = ""  # Deprecated 0.7.3
 
     APPDATA: Path = ""
+    PROJECT_NAME: str = ""
+    PROJECTS_BASE_DIR: Path = ""
+    VENV_BASE_DIR: Path = ""
+    VENV_ENVIRONMENT: str = ""
+    VENV_ORGANIZATION_NAME: str = ""
+    VENV_PYTHON_BASE_DIR: Path = ""
+    VENVIT_DIR: Path = ""
+    VIRTUAL_ENV: str | None = None
 
 
 class EnvVarSetV000000Model(BaseModel):
@@ -178,7 +196,7 @@ class EnvVarSetUpBase(ABC):
 class EnvSetUpV000000(EnvVarSetUpBase):
     def __init__(self):
         super().__init__()
-        self.env_vars = EnvVarV000000Model()
+        self.env_vars = EnvVarModelV000000()
         self.env_var_set_def = EnvVarSetV000000Model(
             environment=EnvVarSettingsModel(
                 def_val=self.env_vars.ENVIRONMENT,
@@ -224,7 +242,7 @@ class EnvSetUpV000000(EnvVarSetUpBase):
 class EnvSetUpV060000(EnvVarSetUpBase):
     def __init__(self, p_secure=True):
         super().__init__()
-        self.env_vars = EnvVarV060000Model()
+        self.env_vars = EnvVarModelV060000()
         self.env_var_set_def = EnvVarSetV060000Model(
             project_name=EnvVarSettingsModel(
                 def_val=self.env_vars.PROJECT_NAME,
@@ -285,7 +303,7 @@ class EnvSetUpV060000(EnvVarSetUpBase):
 class EnvSetUpV070000(EnvVarSetUpBase):
     def __init__(self, p_secure=True):
         super().__init__()
-        self.env_vars = EnvVarV070000Model()
+        self.env_vars = EnvVarModelV070000()
         self.env_var_set_def = EnvVarSetV070000Model(
             project_name=EnvVarSettingsModel(
                 def_val=self.env_vars.PROJECT_NAME,
@@ -356,7 +374,7 @@ class EnvSetUpV070000(EnvVarSetUpBase):
 class EnvSetUpV070300(EnvVarSetUpBase):
     def __init__(self, p_secure=True):
         super().__init__()
-        self.env_vars = EnvVarV070300Model()
+        self.env_vars = EnvVarModelV070300()
         self.env_var_set_def = EnvVarSetV070300Model(
             app_data=EnvVarSettingsModel(
                 def_val=self.env_vars.APPDATA,

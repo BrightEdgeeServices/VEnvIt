@@ -381,7 +381,39 @@ the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues).
 
 # Example Usage of `vn.ps1`, `vs.ps1`, and `vr.ps1`
 
-_To be completed in future updates._
+______________________________________________________________________
+
+## Updating ReleaseNotes Instructions
+
+1. Run the `pushpy.ps1` script or manually commit the current changes.
+1. Generate the release notes
+   1. Use one of the following AI propmpts in Notion to generate the release notes.
+
+      - [Release - Update - General](https://www.notion.so/Release-Update-General-2c0bc8e6c6f38076b4cee82e3cf243fa?v=2c0bc8e6c6f3806e85db000c395f94ce&source=copy_link)
+      - [Release - Update - VenvIt](https://www.notion.so/Release-Update-VenvIt-2c0bc8e6c6f380de84a0f3fbb8b5dda5?v=2c0bc8e6c6f3806e85db000c395f94ce&source=copy_link)
+
+      or
+
+   1. Use the following template and manually update the ReleaseNotes.md file.
+
+      ```
+       # Release ?.?.?
+       ## Summary of Changes
+       - bla, bla, bla
+       ## Next Heading
+       - bla, bla, bla
+       ---
+      ```
+1. You can repeat step 1 multiple times.
+1. You can repeat step 2 multiple times but update the ReleaseNotes that has not been published.
+1. Run the `pushpr.ps1` script once you are ready to create the PR to publish the release. TOy can also manually create
+   the tag, touch a file, commit and push the changes.
+1. Merge the PR in GitHub.
+1. Confirm the following:
+   1. The release update reflects in GitHub
+   1. The release update notification was sent
+
+______________________________________________________________________
 
 [codecov_img]: https://img.shields.io/codecov/c/gh/BrightEdgeeServices/venvit "CodeCov"
 [codecov_lnk]: (https://app.codecov.io/gh/BrightEdgeeServices/venvit) "CodeCov"

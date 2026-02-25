@@ -27,7 +27,8 @@ function Clear-InstallationFiles {
     Remove-Item -Path $upgradeScriptDir -Force -Recurse
     Write-Host "Installation files has been deleted." -ForegroundColor Green
 }
-
+# Invoke-ConcludeInstall stay in PS1
+# Invoce-ConcludeInstall must have a bash version as well
 function Invoke-ConcludeInstall {
     param ([string]$UpgradeScriptDir)
     if (Get-Module -Name "Utils") {
@@ -37,7 +38,7 @@ function Invoke-ConcludeInstall {
 
     # Check for administrative privileges
     if (-not (Test-Admin)) {
-        Write-Host "This script needs to be run as an administrator. Please run it in an elevated PowerShell session." -ForegroundColor Red
+        Write-Host "This script must run as an administrator. Please run it in an elevated PowerShell session." -ForegroundColor Red
         Invoke-CleanUp
         exit
     }
@@ -87,11 +88,15 @@ function Invoke-ConcludeInstall {
     Write-Host "Installation and configuration are complete." -ForegroundColor Green
 }
 
+# Invoke-IsInRole stay in PS1
+# Invoce-IsInRole must have a bash version as well
 function Invoke-IsInRole {
     param ([Security.Principal.WindowsPrincipal]$Principal, [Security.Principal.WindowsBuiltInRole]$Role)
     return $Principal.IsInRole($Role)
 }
 
+# New-Directories stay in PS1
+# New-Directories must have a bash version as well
 function New-Directories {
     # Ensure the directories exist
     param(

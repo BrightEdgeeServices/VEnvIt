@@ -1,4 +1,3 @@
-# Delete one of the license notices (and this s line) below:
 MIT License
 ----------------------------------------------------------------------------
 Copyright (c) 2023, Hendrik du Toit

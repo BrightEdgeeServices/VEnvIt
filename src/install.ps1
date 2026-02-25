@@ -8,7 +8,8 @@ param (
     [Parameter(Mandatory = $false)]
     [Switch]$Pester
 )
-
+# Invoke-Install stay in PS1
+# Invoce-Install must have a bash version as well
 function Invoke-Install {
     # The intention is to keep the following script as short as possible
     # --[ Start copy for readme.md ]------------------------------------------------
@@ -23,6 +24,8 @@ function Invoke-Install {
     # --[ End copy for readme.md ]----------------------------------------------------
 }
 
+# Show-Help stay in PS1
+# Show-Help must have a bash version as well
 function Show-Help {
     $separator = "-" * 80
     Write-Host $separator -ForegroundColor Cyan

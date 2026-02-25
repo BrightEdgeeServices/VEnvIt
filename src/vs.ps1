@@ -32,10 +32,10 @@ function Invoke-VirtualEnvironment {
     Invoke-Script -ScriptPath ($env:VENV_BASE_DIR + "\" + $env:PROJECT_NAME + "_env\Scripts\activate.ps1") | Out-Null
 
     # $env:PROJECT_NAME = $_project_name
-    if ($env:VENV_ENVIRONMENT -eq "loc_dev") {
-        Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Secrets\secrets.ps1") | Out-Null
-        Invoke-Script -ScriptPath ("~\VenvIt\Secrets\secrets.ps1") | Out-Null
-    }
+    # if ($env:VENV_ENVIRONMENT -eq "loc_dev") {
+    Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Secrets\secrets.ps1") | Out-Null
+    Invoke-Script -ScriptPath ("~\VenvIt\Secrets\secrets.ps1") | Out-Null
+    # }
 
     # Remove temporary directories from previous sessions
     # TODO

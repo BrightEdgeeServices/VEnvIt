@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from venvit.upgrade import upgrade
+from venvit import upgrade
 
 
 class ParseArgs:

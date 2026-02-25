@@ -4,8 +4,8 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from venvit.core.env_setup import EnvSetUpV070000
-from venvit.core.env_setup import EnvSetUpV070300
+from venvit.models import EnvSetUpV070000
+from venvit.models import EnvSetUpV070300
 
 # class Settings(BaseSettings):
 #     source: str

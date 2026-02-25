@@ -1,6 +1,8 @@
 ﻿# Install.Tests.ps1
 
+# Install.Tests.ps1 is a legitimate test
 Describe "Install.Tests.ps1: Function Tests" {
+    # Invoke-Install ligitimate test
     Context "Invoke-Install" {
         BeforeAll {
             . $PSScriptRoot\..\src\Install.ps1 -Pester
@@ -21,6 +23,7 @@ Describe "Install.Tests.ps1: Function Tests" {
             New-Item -ItemType Directory -Path $env:VENV_SECRETS_DIR -Force -ErrorAction SilentlyContinue
         }
 
+        # Should Invoke install is a ligitimate test
         It "Should Invoke-ConcludeInstall" {
             Mock Set-ExecutionPolicy {}
             Mock Invoke-WebRequest {
@@ -31,7 +34,7 @@ Describe "Install.Tests.ps1: Function Tests" {
             Mock Invoke-WebRequest {
                 New-ManifestPsd1 -DestinationPath (Join-Path -Path "$PSScriptRoot\.." -ChildPath (Get-ManifestFileName)) -data $ManifestData700
                 $compress = @{
-                    Path             = "$PSScriptRoot\..\*.md", "$PSScriptRoot\..\LICENSE", "$PSScriptRoot\..\Manifest.psd1", "$PSScriptRoot\..\src"
+                    Path             = "$PSScriptRoot\..\*.md", "$PSScriptRoot\..\LICENSE.txt", "$PSScriptRoot\..\Manifest.psd1", "$PSScriptRoot\..\src"
                     CompressionLevel = "Fastest"
                     DestinationPath  = $OutFile
                 }
@@ -66,12 +69,8 @@ Describe "Install.Tests.ps1: Function Tests" {
             Remove-Item -Path $TempBaseDir -Recurse -Force
         }
     }
+    # Show-Help ligitimate test
     Context "Show-Help Function Tests" {
         # Test to be implemented
     }
 }
-
-Describe "Install.Tests.ps1: Testing" {
-    # Test to be implemented
-}
-

@@ -139,11 +139,11 @@ function Backup-ArchiveOldVersion {
     }
     elseif ($archiveVersion -ge "7.2.0") {
         $fileList =
-            "$env:VENVIT_DIR\*.*",
-            "$env:VENVIT_DIR\Config\*.*",
-            "~\VenvIt\Config\*.*",
-            "$env:VENVIT_DIR\Secrets\*.*",
-            "~\VenvIt\Secrets\*.*"
+        "$env:VENVIT_DIR\*.*",
+        "$env:VENVIT_DIR\Config\*.*",
+        "~\VenvIt\Config\*.*",
+        "$env:VENVIT_DIR\Secrets\*.*",
+        "~\VenvIt\Secrets\*.*"
     }
 
     if ($fileList) {
@@ -399,8 +399,8 @@ function Show-EnvironmentVariables {
     Write-Host "VENV_ORGANIZATION_NAME:   $env:VENV_ORGANIZATION_NAME"
     Write-Host "PROJECT_DIR:              $env:PROJECT_DIR"
     Write-Host ""
-    Write-Host "INSTALLER_USER_PWD:       $env:INSTALLER_USER_PWD"
-    Write-Host "INSTALLER_USER_ID:        $env:INSTALLER_USER_ID"
+    Write-Host "INSTALLER_PWD:       $env:INSTALLER_PWD"
+    Write-Host "INSTALLER_USERID:        $env:INSTALLER_USERID"
     Write-Host "MYSQL_DATABASE:           $env:MYSQL_DATABASE"
     Write-Host "MYSQL_USER:               $env:MYSQL_USER"
     Write-Host "MYSQL_PASSWORD:           $env:MYSQL_PASSWORD"

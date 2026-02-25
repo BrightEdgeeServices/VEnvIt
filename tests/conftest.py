@@ -7,10 +7,10 @@ import pytest
 from beetools.utils import rm_tree
 
 from tests.testdata import test_data
-from venvit.core.env_setup import EnvSetUpV000000
-from venvit.core.env_setup import EnvSetUpV060000
-from venvit.core.env_setup import EnvSetUpV070000
-from venvit.core.env_setup import EnvSetUpV070300
+from venvit.models import EnvSetUpV000000
+from venvit.models import EnvSetUpV060000
+from venvit.models import EnvSetUpV070000
+from venvit.models import EnvSetUpV070300
 
 # sys.path.append('path')
 
@@ -137,7 +137,7 @@ def env_setup_07_00_00_self_destruct_with_config_files(monkeypatch, env_setup_07
 
 
 @pytest.fixture
-def env_setup_07_02_00_self_destruct(monkeypatch):
+def env_setup_07_02_00_self_destruct(monkeypatch, env_setup_07_00_00_self_destruct_with_config_files):
     base_dir = WorkingDir().dir
     # base_dir = Path("C:", "Users", "hendr", "AppData", "Local", "Temp", "VenvIt_d2ccea51-cc64-4767-ac62-4f16a393e4c9")
     app_data: Path = Path(base_dir / test_data.v070300["app_data"])

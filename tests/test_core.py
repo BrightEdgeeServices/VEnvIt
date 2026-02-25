@@ -3,16 +3,16 @@ from pathlib import Path
 
 import pytest
 
-from venvit.core.env_setup import EnvSetUpV070300
-from venvit.core.env_setup import EnvVarSettingsModel
-from venvit.core.env_setup import EnvVarSetV000000Model
-from venvit.core.env_setup import EnvVarSetV060000Model
-from venvit.core.env_setup import EnvVarSetV070000Model
-from venvit.core.env_setup import EnvVarSetV070300Model
-from venvit.core.env_setup import EnvVarV000000Model
-from venvit.core.env_setup import EnvVarV060000Model
-from venvit.core.env_setup import EnvVarV070000Model
-from venvit.core.env_setup import EnvVarV070300Model
+from venvit import EnvSetUpV070300
+from venvit import EnvVarSettingsModel
+from venvit import EnvVarSetV000000Model
+from venvit import EnvVarSetV060000Model
+from venvit import EnvVarSetV070000Model
+from venvit import EnvVarSetV070300Model
+from venvit import EnvVarV000000Model
+from venvit import EnvVarV060000Model
+from venvit import EnvVarV070000Model
+from venvit import EnvVarV070300Model
 
 
 # noinspection PyArgumentList
