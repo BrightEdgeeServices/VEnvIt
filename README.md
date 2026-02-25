@@ -1,34 +1,49 @@
 # VEnvIt
 
-| **Category** | **Status' and Links** |
+| **Category** | **Status' and Links**                                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| General | \[![][maintenance_y_img]\][maintenance_y_lnk] \[![][semver_pic]\][semver_link] |
-| CI | \[![][pre_commit_ci_img]\][pre_commit_ci_lnk] \[![][codecov_img]\][codecov_lnk] \[![][gha_docu_img]\][gha_docu_lnk] |
-| Github | \[![][gh_issues_img]\][gh_issues_lnk] \[![][gh_language_img]\][gh_language_lnk] \[![][gh_last_commit_img]\][gh_last_commit_lnk] |
+| General      | \[![][maintenance_y_img]\][maintenance_y_lnk] \[![][semver_pic]\][semver_link]                                                  |
+| CI           | \[![][pre_commit_ci_img]\][pre_commit_ci_lnk] \[![][codecov_img]\][codecov_lnk] \[![][gha_docu_img]\][gha_docu_lnk]             |
+| Github       | \[![][gh_issues_img]\][gh_issues_lnk] \[![][gh_language_img]\][gh_language_lnk] \[![][gh_last_commit_img]\][gh_last_commit_lnk] |
 
-VEnvIt is a utility that employs Python and PowerShell scripts to create, initialize, and remove virtual environments tailored for both development and production systems. It provides significant flexibility, allowing users to configure their environments according to specific requirements.
+VEnvIt is a utility that employs Python and PowerShell scripts to create, initialize, and remove virtual environments
+tailored for both development and production systems. It provides significant flexibility, allowing users to configure
+their environments according to specific requirements.
 
-Instead of relying on traditional configuration files (INI, TOML, JSON), VEnvIt uses user-modifiable scripts for settings configuration. This design choice offers greater flexibility and adaptability, enabling fine-grained customization that standard configuration files cannot accommodate.
+Instead of relying on traditional configuration files (INI, TOML, JSON), VEnvIt uses user-modifiable scripts for
+settings configuration. This design choice offers greater flexibility and adaptability, enabling fine-grained
+customization that standard configuration files cannot accommodate.
 
-However, this approach introduces additional complexity and requires a thorough understanding of the application's workings. Proficiency in Python and PowerShell scripting is essential to effectively utilize and configure VEnvIt.
+However, this approach introduces additional complexity and requires a thorough understanding of the application's
+workings. Proficiency in Python and PowerShell scripting is essential to effectively utilize and configure VEnvIt.
+
+Is this a Python or a PowerShell project? Thechnically it is both. As much As I would like it to be rather a Python
+project, PowerShell is essential:
+
+- The assumption is that their is no native Python installation on the machine (see step Instlaation, Step 2 below). The
+  app must be kick-started from somewhere, so PowerSeell seems to be the right choice.
+- The instlaation manipulate the environment variables of the current session. This is tricky if not impossible with
+  Python only. PowerShell sorts this out.
 
 ## Key Features
 
 - **Flexible Environment Management**: Create, initialize, and remove virtual environments using customizable scripts.
 - **User-Controlled Configuration**: Configure settings through scripts for maximum adaptability.
-- **Tailored for Complex Systems**: Designed to handle the intricacies of unique development and production environments.
+- **Tailored for Complex Systems**: Designed to handle the intricacies of unique development and production
+  environments.
 
 ## Prerequisites
 
 - **Scripting Knowledge**: Familiarity with Python and PowerShell scripting languages.
-- **Understanding of Virtual Environments**: Basic knowledge of virtual environments and their role in development and production systems.
+- **Understanding of Virtual Environments**: Basic knowledge of virtual environments and their role in development and
+  production systems.
 
 # Usage Overview
 
 VEnvIt provides three primary scripts for managing virtual environments:
 
 - `vn.ps1`: Creates a new virtual environment.
-- `vi.ps1`: Initializes an existing virtual environment.
+- `vs.ps1`: Initializes an existing virtual environment.
 - `vr.ps1`: Removes a virtual environment.
 
 Additional configuration scripts are auto-generated during environment setup for customization.
@@ -39,7 +54,10 @@ Additional configuration scripts are auto-generated during environment setup for
 
 ### Introduction
 
-The `vn.ps1` script creates a new Python virtual environment. It uses a combination of environment variables and command-line parameters to set up the environment. If the target project directory already exists and contains a `pyproject.toml` file, the Python modules will be installed accordingly. Otherwise, it installs a default set of development tools:
+The `vn.ps1` script creates a new Python virtual environment. It uses a combination of environment variables and
+command-line parameters to set up the environment. If the target project directory already exists and contains a
+`pyproject.toml` file, the Python modules will be installed accordingly. Otherwise, it installs a default set of
+development tools:
 
 - **Pre-Commit**
 - **Black**
@@ -73,18 +91,20 @@ or
 .\vn.ps1 -ProjectName MyProject -PythonVer 310 -Organization MyOrg -ResetScripts y -DevMode y
 ```
 
-This command creates a new virtual environment for a project named **MyProject**, using Python 3.10, associated with the organization **MyOrg**, resets scripts, and installs development modules.
+This command creates a new virtual environment for a project named **MyProject**, using Python 3.10, associated with the
+organization **MyOrg**, resets scripts, and installs development modules.
 
-## Initializing an Existing Virtual Environment (`vi.ps1`)
+## Initializing an Existing Virtual Environment (`vs.ps1`)
 
 ### Introduction
 
-The `vi.ps1` script initializes an existing virtual environment, ensuring all configurations and dependencies are up to date. This includes running project-specific setup and environment variable scripts.
+The `vs.ps1` script initializes an existing virtual environment, ensuring all configurations and dependencies are up to
+date. This includes running project-specific setup and environment variable scripts.
 
 ### Syntax
 
 ```powershell
-.\vi.ps1 -ProjectName <ProjectName>
+.\vs.ps1 -ProjectName <ProjectName>
 ```
 
 ### Parameters
@@ -94,13 +114,13 @@ The `vi.ps1` script initializes an existing virtual environment, ensuring all co
 ### Example
 
 ```powershell
-.\vi.ps1 -ProjectName MyProject
+.\vs.ps1 -ProjectName MyProject
 ```
 
 or
 
 ```powershell
-.\vi.ps1 -Help
+.\vs.ps1 -Help
 ```
 
 This command initializes the virtual environment for **MyProject**.
@@ -109,7 +129,8 @@ This command initializes the virtual environment for **MyProject**.
 
 ### Introduction
 
-The `vr.ps1` script removes an existing virtual environment, including all associated configurations and dependencies. It also archives and removes project-specific configuration scripts.
+The `vr.ps1` script removes an existing virtual environment, including all associated configurations and dependencies.
+It also archives and removes project-specific configuration scripts.
 
 ### Syntax
 
@@ -131,50 +152,114 @@ This command removes the virtual environment for **MyProject**.
 
 # Project-Specific PowerShell Configuration Scripts
 
-When you create a new virtual environment using `vn.ps1`, it generates additional PowerShell configuration scripts specific to the project. These scripts support unique configuration options and assist in the installation and activation of the virtual environment. They reside in various subdirectories accessed through environment variables pointing to these directories.
+When you create a new virtual environment using `vn.ps1`, it generates additional PowerShell configuration scripts
+specific to the project. These scripts support unique configuration options and assist in the installation and
+activation of the virtual environment. They reside in various subdirectories accessed through environment variables
+pointing to these directories.
 
 ### Script Descriptions
 
-1. **`VEnv<ProjectName>Install.ps1`**: Contains special instructions for installing this virtual environment. It is only called by `vn.ps1`. The initial default version can be updated for subsequent runs.
-2. **`VEnv<ProjectName>EnvVar.ps1`**: Sets environment variables for the project.
-3. **`VEnv<ProjectName>Setup_custom.ps1`**: Contains special instructions for setting up the virtual environment.
-4. **`Secrets.ps1`**: Contains instructions for setting secrets for the project. Created in both the default and user secrets directories (`VENV_SECRETS_DEFAULT_DIR` and `VENV_SECRETS_USER_DIR`).
+1. **`VEnv<ProjectName>Install.ps1`**: Contains special instructions for installing this virtual environment. It is only
+   called by `vn.ps1`. The initial default version can be updated for subsequent runs.
+1. **`VEnv<ProjectName>EnvVar.ps1`**: Sets environment variables for the project.
+1. **`VEnv<ProjectName>Setup_custom.ps1`**: Contains special instructions for setting up the virtual environment.
+1. **`Secrets.ps1`**: Contains instructions for setting secrets for the project. Created in both the default and user
+   secrets directories (`VENVIT_DIR\Secrets` and `~\VenvIt\Secrets`).
 
 ### Script Locations
 
-- **Default Configuration Directory (`VENV_CONFIG_DEFAULT_DIR`)**: This directory typically resides on a shared drive, preferably as a subdirectory of the main installation directory (`VENVIT_DIR`). It contains organization-wide scripts.
-- **User Configuration Directory (`VENV_CONFIG_USER_DIR`)**: This directory typically resides on the local drive of the developer's machine and should only be accessible to the current user/environment. Scripts here override those in the default directory.
+- **Default Configuration Directory (`VENV_CONFIG_DEFAULT_DIR`)**: This directory typically resides on a shared drive,
+  preferably as a subdirectory of the main installation directory (`VENVIT_DIR`). It contains organization-wide scripts.
+- **User Configuration Directory (`~\VenvIt\Config`)**: This directory typically resides on the local drive of the
+  developer's machine and should only be accessible to the current user/environment. Scripts here override those in the
+  default directory.
 
 ### Script Management
 
-- If the `-ResetScripts` switch is used with `vn.ps1`, it will archive the current scripts for this project and create new default scripts. Without `-ResetScripts`, existing scripts will be used if they exist.
-- If `vr.ps1` is called to remove the virtual environment, the scripts are archived, and new ones will be created upon the next execution of `vn.ps1`. You can refer to the archive created by `vr.ps1` to access previous scripts.
+- If the `-ResetScripts` switch is used with `vn.ps1`, it will archive the current scripts for this project and create
+  new default scripts. Without `-ResetScripts`, existing scripts will be used if they exist.
+- If `vr.ps1` is called to remove the virtual environment, the scripts are archived, and new ones will be created upon
+  the next execution of `vn.ps1`. You can refer to the archive created by `vr.ps1` to access previous scripts.
 
 # Environment Variables
 
-VEnvIt utilizes several environment variables to manage virtual environments effectively. These variables should be set during installation.
+VEnvIt utilizes several environment variables to manage virtual environments effectively. These variables should be set
+during installation.
 
-| Environment Variable | Description |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **PROJECTS_BASE_DIR** | The parent/base directory for all projects (e.g., `C:\Projects`). Organize repositories by organization, such as personal projects and organizational projects (e.g., `C:\Projects\MyOrg\MyProject`, `C:\Projects\Company\CompanyProject`). |
-| **VENV_BASE_DIR** | The directory where the Python virtual environments are stored (e.g., `~\venv`). Unlike the conventional practice of keeping virtual environment files within the project directory, all virtual environments are stored together in this dedicated directory. |
-| **VENV_CONFIG_DEFAULT_DIR** | Directory for default (organization-wide) configuration scripts. Typically a subdirectory of `VENVIT_DIR` (e.g., `$VENVIT_DIR\Configs`). Shared among all developers. |
-| **VENV_CONFIG_USER_DIR** | Directory for user-specific configuration scripts (e.g., `~\VEnvIt\Configs`). Should only be accessible to the current user/machine. Scripts here override those in the default directory. |
-| **VENV_ENVIRONMENT** | Identifies the working environment. Possible values include `loc_dev`, `github_dev`, `prod`, or other values defined by the organization. This variable may be set differently in various environments. The default is set in `$VENV_CONFIG_DEFAULT_DIR\VEnv<ProjectName>EnvVar.ps1` and can be overridden in `$VENV_CONFIG_USER_DIR\VEnv<ProjectName>EnvVar.ps1`. |
-| **VENV_PYTHON_BASE_DIR** | Directory for Python base installations (e.g., `C:\Python`). Different versions of Python are accessed during the creation of virtual environments (e.g., `C:\Python\Python35`, `C:\Python\Python312`). |
-| **VENV_SECRETS_DEFAULT_DIR** | Directory for default (organization-wide) secrets scripts for the current environment as per `VENV_ENVIRONMENT` (e.g., `$VENVIT_DIR\Secrets`). Contents are accessible to all who have access to the installation. |
-| **VENV_SECRETS_USER_DIR** | Directory for user-specific secrets scripts for the current environment (e.g., `~\VEnvIt\Secrets`). Contents are private and should not be shared or pushed to repositories. Scripts here override those in the default directory. |
-| **VENVIT_DIR** | Installation directory where VEnvIt scripts reside (e.g., `C:\VEnvIt`). In an organizational setup, this should be a shared drive. |
+| Environment Variable        | Description                                                                                                                                                                                                                                                                                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **PROJECTS_BASE_DIR**       | The parent/base directory for all projects (e.g., `C:\Projects`). Organize repositories by organization, such as personal projects and organizational projects (e.g., `C:\Projects\MyOrg\MyProject`, `C:\Projects\Company\CompanyProject`).                                                                                                                  |
+| **VENV_BASE_DIR**           | The directory where the Python virtual environments are stored (e.g., `~\venv`). Unlike the conventional practice of keeping virtual environment files within the project directory, all virtual environments are stored together in this dedicated directory.                                                                                               |
+| **VENV_CONFIG_DEFAULT_DIR** | Directory for default (organization-wide) configuration scripts. Typically a subdirectory of `VENVIT_DIR` (e.g., `$VENVIT_DIR\Configs`). Shared among all developers.                                                                                                                                                                                        |
+| **~\\VenvIt\\Config**       | Directory for user-specific configuration scripts (e.g., `~\VEnvIt\Configs`). Should only be accessible to the current user/machine. Scripts here override those in the default directory.                                                                                                                                                                   |
+| **VENV_ENVIRONMENT**        | Identifies the working environment. Possible values include `loc_dev`, `github_dev`, `prod`, or other values defined by the organization. This variable may be set differently in various environments. The default is set in `$VENV_CONFIG_DEFAULT_DIR\VEnv<ProjectName>EnvVar.ps1` and can be overridden in `~\VenvIt\Config\VEnv<ProjectName>EnvVar.ps1`. |
+| **VENV_PYTHON_BASE_DIR**    | Directory for Python base installations (e.g., `C:\Python`). Different versions of Python are accessed during the creation of virtual environments (e.g., `C:\Python\Python35`, `C:\Python\Python312`).                                                                                                                                                      |
+| **VENVIT_DIR\\Secrets**     | Directory for default (organization-wide) secrets scripts for the current environment as per `VENV_ENVIRONMENT` (e.g., `$VENVIT_DIR\Secrets`). Contents are accessible to all who have access to the installation.                                                                                                                                           |
+| **~\\VenvIt\\Secrets**      | Directory for user-specific secrets scripts for the current environment (e.g., `~\VEnvIt\Secrets`). Contents are private and should not be shared or pushed to repositories. Scripts here override those in the default directory.                                                                                                                           |
+| **VENVIT_DIR**              | Installation directory where VEnvIt scripts reside (e.g., `C:\VEnvIt`). In an organizational setup, this should be a shared drive.                                                                                                                                                                                                                           |
 
-# Server Installation
+# Default Installation Directory Structure
 
-To install VEnvIt on a server, follow these steps:
+## Windows
 
-1. **Set Environment Variables**: Decide on the values for the system environment variables listed above and set them accordingly.
+```
+c:\
+├── ~\.
+│   └── VEnvIt (Client/user files)
+│       ├── Config (User configuration files)
+│       │   ├── VEnvMyProjectInstall.ps1
+│       │   ├── VEnvMyProjectEnvVar.ps1
+│       │   ├── VEnvMyProjectCustomSetup.ps1
+│       │   ├── VEnvMyWorkProjectInstall.ps1
+│       │   ├── VEnvMyWorkProjectEnvVar.ps1
+│       │   ├── VEnvMyWorkProjectCustomSetup.ps1
+│       │   └── ...
+│       ├── Secrets (User secrets file)
+│       │   └── Secrets.ps1
+│       └── venv (env:VENV_BASE_DIR)
+│           ├── MyProject_env
+│           ├── MyWorkProject_env
+│           └── ...
+├── Projects (env:PROJECTS_BASE_DIR)
+│   ├── Personal (env:VENV_ORGANIZATION_NAME)
+│   │   ├── MyProject (env:PROJECT_NAME)
+│   │   └── ...
+│   └── Work (env:VENV_ORGANIZATION_NAME)
+│       ├── MyWorkProject (env:PROJECT_NAME)
+│       └── ...
+├── Python (env:VENV_PYTHON_BASE_DIR)
+│   ├── Python39
+│   ├── Python312
+│   └── ...
+.
+.
+.
+└── env:APPDATA (or shared directory for a shared installation)
+    └── VEnvIt (env:VENVIT_DIR)
+        ├── Config (Default configuration files)
+        │   ├── VEnvMyProjectInstall.ps1
+        │   ├── VEnvMyProjectEnvVar.ps1
+        │   ├── VEnvMyProjectCustomSetup.ps1
+        │   ├── VEnvMyWorkProjectInstall.ps1
+        │   ├── VEnvMyWorkProjectEnvVar.ps1
+        │   ├── VEnvMyWorkProjectCustomSetup.ps1
+        │   └── ...
+        └── Config (User configuration files)
+            └── Secrets.ps1
+```
 
-2. **Remove Existing Python Installations**: Remove any native Python installations and ensure that any references to Python installations are removed from the `PATH` environment variable. This step is vital for successful operation.
+# Shared Installation
 
-3. **Install Python Versions**: Install the various versions of Python you intend to use (e.g., `C:\Python\Python39`, `C:\Python\Python312`). During installation, use the following settings:
+To install a shared version of VEnvIt, follow these steps:
+
+1. **Set Environment Variables**: Decide on the values for the system environment variables listed above and set them
+   accordingly.
+
+1. **Remove Existing Python Installations**: Remove any native Python installations and ensure that any references to
+   Python installations are removed from the `PATH` environment variable. This step is vital for successful operation.
+
+1. **Install Python Versions**: Install the various versions of Python you intend to use (e.g., `C:\Python\Python39`,
+   `C:\Python\Python312`). During installation, use the following settings:
 
    - **Do Not** select "Use admin privileges when installing py.exe."
    - **Do Not** add `python.exe` to the `PATH`.
@@ -188,9 +273,10 @@ To install VEnvIt on a server, follow these steps:
    - **Select** "Download debug binaries (requires VS 2017 or later)."
    - Change the "Customize install location" to your desired directory (e.g., `C:\Python\Python310`).
 
-4. **Ensure Shared Directory Exists**: The shared directory `VENVIT_DIR` must exist and be accessible.
+1. **Ensure Shared Directory Exists**: The shared directory `VENVIT_DIR` must exist and be accessible.
 
-5. **Run Installation Script**: Open a new PowerShell window **with Administrator rights**. Do not use an existing one. Paste the following script into the PowerShell window:
+1. **Run Installation Script**: Open a new PowerShell window **with Administrator rights**. Do not use an existing one.
+   Paste the following script into the PowerShell window:
 
    ```powershell
    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
@@ -199,16 +285,18 @@ To install VEnvIt on a server, follow these steps:
    $UpgradeScriptPath = Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "Installation-Files.zip"
    Invoke-WebRequest "https://github.com/BrightEdgeeServices/venvit/releases/download/$Tag/Installation-Files.zip" -OutFile $UpgradeScriptPath
    Expand-Archive -Path $UpgradeScriptPath -DestinationPath $UpgradeScriptDir
-   Import-Module -Name (Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "src/Install-Conclude.psm1")
+   Import-Module -Name (Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "src\Install-Conclude.psm1")
    Invoke-ConcludeInstall -Release $Tag -UpgradeScriptDir $UpgradeScriptDir
    ```
 
-6. **Configure Secrets Scripts**: Configure the `Secrets.ps1` script in both `VENV_SECRETS_DEFAULT_DIR` and `VENV_SECRETS_USER_DIR`:
+1. **Configure Secrets Scripts**: Configure the `Secrets.ps1` script in both `VENVIT_DIR\Secrets` and
+   `~\VenvIt\Secrets`:
 
    - Set the ports for the various Docker containers.
-   - Set environment variables for secrets (e.g., `$env:MY_SECRET = 'AaBbCcDdE'`), ensuring they match configurations in GitHub or other services.
+   - Set environment variables for secrets (e.g., `$env:MY_SECRET = 'AaBbCcDdE'`), ensuring they match configurations
+     in GitHub or other services.
 
-7. **Confirm Installation**:
+1. **Confirm Installation**:
 
    - Open a new PowerShell window.
 
@@ -227,7 +315,7 @@ To install VEnvIt on a server, follow these steps:
    - Initialize the test project:
 
      ```powershell
-     .\vi.ps1 -ProjectName TestProject
+     .\vs.ps1 -ProjectName TestProject
      ```
 
      - Ensure the virtual environment is activated.
@@ -243,7 +331,9 @@ To install VEnvIt on a server, follow these steps:
 
 # Contributor Guide
 
-Thank you for your interest in contributing to **VEnvIt**. This project is open-source under the [MIT License](https://github.com/BrightEdgeeServices/venvit/blob/master/LICENSE) and welcomes contributions in the form of bug reports, feature requests, and pull requests.
+Thank you for your interest in contributing to **VEnvIt**. This project is open-source under
+the [MIT License](https://github.com/BrightEdgeeServices/venvit/blob/master/LICENSE) and welcomes contributions in the
+form of bug reports, feature requests, and pull requests.
 
 ## Important Resources
 
@@ -252,7 +342,8 @@ Thank you for your interest in contributing to **VEnvIt**. This project is open-
 
 ## Reporting Bugs
 
-Please report bugs on the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues). When filing an issue, please include:
+Please report bugs on the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues). When filing an issue,
+please include:
 
 - A detailed description of the problem.
   - What command did you execute?
@@ -264,7 +355,8 @@ Please report bugs on the [Issue Tracker](https://github.com/BrightEdgeeServices
 
 ## Requesting Features
 
-Feature requests are also handled through the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues). Please include:
+Feature requests are also handled through the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues).
+Please include:
 
 - A detailed description of the proposed feature or improvement.
 - The benefits it would bring to the project.
@@ -279,15 +371,49 @@ Feature requests are also handled through the [Issue Tracker](https://github.com
 
 # License
 
-This project is licensed under the terms of the [MIT License](https://github.com/BrightEdgeeServices/venvit/blob/master/LICENSE).
+This project is licensed under the terms of
+the [MIT License](https://github.com/BrightEdgeeServices/venvit/blob/master/LICENSE).
 
 # Support
 
-For support or any questions, please open an issue on the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues).
+For support or any questions, please open an issue on
+the [Issue Tracker](https://github.com/BrightEdgeeServices/venvit/issues).
 
-# Example Usage of `vn.ps1`, `vi.ps1`, and `vr.ps1`
+# Example Usage of `vn.ps1`, `vs.ps1`, and `vr.ps1`
 
-_To be completed in future updates._
+______________________________________________________________________
+
+## Updating ReleaseNotes Instructions
+
+1. Run the `pushpy.ps1` script or manually commit the current changes.
+1. Generate the release notes
+   1. Use one of the following AI propmpts in Notion to generate the release notes.
+
+      - [Release - Update - General](https://www.notion.so/Release-Update-General-2c0bc8e6c6f38076b4cee82e3cf243fa?v=2c0bc8e6c6f3806e85db000c395f94ce&source=copy_link)
+      - [Release - Update - VenvIt](https://www.notion.so/Release-Update-VenvIt-2c0bc8e6c6f380de84a0f3fbb8b5dda5?v=2c0bc8e6c6f3806e85db000c395f94ce&source=copy_link)
+
+      or
+
+   1. Use the following template and manually update the ReleaseNotes.md file.
+
+      ```
+       # Release ?.?.?
+       ## Summary of Changes
+       - bla, bla, bla
+       ## Next Heading
+       - bla, bla, bla
+       ---
+      ```
+1. You can repeat step 1 multiple times.
+1. You can repeat step 2 multiple times but update the ReleaseNotes that has not been published.
+1. Run the `pushpr.ps1` script once you are ready to create the PR to publish the release. TOy can also manually create
+   the tag, touch a file, commit and push the changes.
+1. Merge the PR in GitHub.
+1. Confirm the following:
+   1. The release update reflects in GitHub
+   1. The release update notification was sent
+
+______________________________________________________________________
 
 [codecov_img]: https://img.shields.io/codecov/c/gh/BrightEdgeeServices/venvit "CodeCov"
 [codecov_lnk]: (https://app.codecov.io/gh/BrightEdgeeServices/venvit) "CodeCov"

@@ -37,17 +37,17 @@ function Invoke-PrepForUpgrade_6_0_0 {
 function Invoke-PrepForUpgrade_7_0_0 {
     # Apply necessary changes and cleanup to prepare and implement v7.0.0
     # The current installed version is pre v7.0.0
-    $env:VENV_CONFIG_USER_DIR = $env:VENV_CONFIG_DIR | Out-Null
-    $env:VENV_SECRETS_USER_DIR = $env:VENV_SECRETS_DIR | Out-Null
+    # $env:VENV_CONFIG_USER_DIR = $env:VENV_CONFIG_DIR | Out-Null
+    # $env:VENV_SECRETS_USER_DIR = $env:VENV_SECRETS_DIR | Out-Null
 
-    [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:VENV_CONFIG_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
-    [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:VENV_SECRETS_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
+    # [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:VENV_CONFIG_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
+    # [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:VENV_SECRETS_USER_DIR, [System.EnvironmentVariableTarget]::Machine)
 
 
     $postFix = @(@("install", "Install"), @("setup_custom", "CustomSetup"))
     foreach ($postfix in $postFix) {
         $filenameFilter = "venv_*_" + $postFix[0] + ".ps1"
-        $files = Get-ChildItem -Path $env:VENV_CONFIG_USER_DIR -Filter $filenameFilter
+        $files = Get-ChildItem -Path "~\VenvIt\Config" -Filter $filenameFilter
         foreach ($file in $files) {
             $filterRe = "venv_(.+)_" + $postFix[0] + "\.ps1"
             if ($file.Name -match $filterRe) {
@@ -65,9 +65,22 @@ function Invoke-PrepForUpgrade_7_0_0 {
 }
 
 function Invoke-PrepForUpgrade_7_2_0 {
-    # Apply necessary changes and cleanup to prepare and implement v7.2.0
     # The current installed version is v7.0.0
+    Install-PythonRepository -Major "3" -Minor "13" -Patch "3"
+    Install-PythonVirtualEnv -Major "3" -Minor "13" -Patch "3"
     Write-Host "v7.2.0 preparation steps are done." -ForegroundColor Green
+}
+
+function Invoke-PrepForUpgrade_7_3_0 {
+    The current installed version is v7.2.0
+    $env:VENV_CONFIG_DEFAULT_DIR = ""
+    [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_DEFAULT_DIR", $env:null, [System.EnvironmentVariableTarget]::Machine)
+    $env:VENV_CONFIG_USER_DIR = ""
+    [System.Environment]::SetEnvironmentVariable("VENV_CONFIG_USER_DIR", $env:null, [System.EnvironmentVariableTarget]::Machine)
+    $env:VENV_SECRETS_DEFAULT_DIR = ""
+    [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_DEFAULT_DIR", $env:null, [System.EnvironmentVariableTarget]::Machine)
+    $env:VENV_SECRETS_USER_DIR = ""
+    [System.Environment]::SetEnvironmentVariable("VENV_SECRETS_USER_DIR", $env:null, [System.EnvironmentVariableTarget]::Machine)
 }
 
 function Remove-EnvVarIfExists {
@@ -86,35 +99,33 @@ function Remove-EnvVarIfExists {
 
 function Update-PackagePrep {
     param(
-        [string]$UpgradeScriptDir
+        [string]$UpgradeScriptDir,
+        [string]$InstalledVersion
     )
 
-    if (Test-Path "env:VENVIT_DIR") {
-        $CurrentVersion = Get-Version -SourceDir $env:VENVIT_DIR
+    if ($InstalledVersion -ge "7.0.0") {
         $currentInstallDir = $env:VENVIT_DIR
     }
-    elseif (Test-Path "env:SCRIPTS_DIR") {
-        $CurrentVersion = Get-Version -SourceDir $env:SCRIPTS_DIR
+    elseif ($InstalledVersion -eq "6.0.0") {
         $currentInstallDir = $env:SCRIPTS_DIR
     }
     else {
-        $CurrentVersion = $null
         $currentInstallDir = $null
     }
 
-    if ($CurrentVersion) {
+    if ($InstalledVersion) {
         $UpgradeVersion = Get-Version -SourceDir $UpgradeScriptDir
         $timeStamp = Get-Date -Format "yyyyMMddHHmm"
         Backup-ArchiveOldVersion -InstallationDir $currentInstallDir -TimeStamp $timeStamp | Out-Null
         # Apply changes from current version to latest
         foreach ($version in $VersionChanges.Keys | Sort-Object { [version]$_ }) {
-            if ([version]$version -gt $currentVersion -and [version]$version -le $UpgradeVersion) {
+            if ([version]$version -gt $InstalledVersion -and [version]$version -le $UpgradeVersion) {
                 & $VersionChanges[$version]  | Out-Null # Call the corresponding upgrade function
             }
         }
     }
 
-    return $CurrentVersion
+    return $InstalledVersion
 }
 
 Export-ModuleMember -Function Get-ManifestFileName, Get-Version, Update-PackagePrep, Invoke-PrepForUpgrade_6_0_0

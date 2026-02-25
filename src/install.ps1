@@ -8,21 +8,24 @@ param (
     [Parameter(Mandatory = $false)]
     [Switch]$Pester
 )
-
+# Invoke-Install stay in PS1
+# Invoce-Install must have a bash version as well
 function Invoke-Install {
     # The intention is to keep the following script as short as possible
     # --[ Start copy for readme.md ]------------------------------------------------
-    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
     $UpgradeScriptDir = New-Item -ItemType Directory -Path (Join-Path -Path $env:TEMP -ChildPath ("venvit_" + [Guid]::NewGuid().ToString()))
     $Tag = (Invoke-WebRequest "https://api.github.com/repos/BrightEdgeeServices/venvit/releases" | ConvertFrom-Json)[0].tag_name
     $UpgradeScriptPath = Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "Installation-Files.zip"
     Invoke-WebRequest "https://github.com/BrightEdgeeServices/venvit/releases/download/$Tag/Installation-Files.zip" -OutFile $UpgradeScriptPath
     Expand-Archive -Path $UpgradeScriptPath -DestinationPath $UpgradeScriptDir
-    Import-Module -Name (Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "src/Install-Conclude.psm1")
+    Import-Module -Name (Join-Path -Path $UpgradeScriptDir.FullName -ChildPath "src\Install-Conclude.psm1")
     Invoke-ConcludeInstall -Release $Tag -UpgradeScriptDir $UpgradeScriptDir
     # --[ End copy for readme.md ]----------------------------------------------------
 }
 
+# Show-Help stay in PS1
+# Show-Help must have a bash version as well
 function Show-Help {
     $separator = "-" * 80
     Write-Host $separator -ForegroundColor Cyan

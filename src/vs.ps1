@@ -1,4 +1,4 @@
-# vi.ps1
+# vs.ps1
 
 param (
     [Parameter(Mandatory = $false, Position = 0)]
@@ -22,8 +22,8 @@ function Invoke-VirtualEnvironment {
     }
     Import-Module $PSScriptRoot\Utils.psm1
 
-    Invoke-Script -ScriptPath ("$env:VENV_CONFIG_DEFAULT_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) | Out-Null
-    Invoke-Script -ScriptPath ("$env:VENV_CONFIG_USER_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) | Out-Null
+    Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) | Out-Null
+    Invoke-Script -ScriptPath ("~\VenvIt\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) | Out-Null
 
     if ($env:VIRTUAL_ENV) {
         "Deactivate VEnv $env:VIRTUAL_ENV."
@@ -32,10 +32,10 @@ function Invoke-VirtualEnvironment {
     Invoke-Script -ScriptPath ($env:VENV_BASE_DIR + "\" + $env:PROJECT_NAME + "_env\Scripts\activate.ps1") | Out-Null
 
     # $env:PROJECT_NAME = $_project_name
-    if ($env:VENV_ENVIRONMENT -eq "loc_dev") {
-        Invoke-Script -ScriptPath ("$env:VENV_SECRETS_DEFAULT_DIR\secrets.ps1") | Out-Null
-        Invoke-Script -ScriptPath ("$env:VENV_SECRETS_USER_DIR\secrets.ps1") | Out-Null
-    }
+    # if ($env:VENV_ENVIRONMENT -eq "loc_dev") {
+    Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Secrets\secrets.ps1") | Out-Null
+    Invoke-Script -ScriptPath ("~\VenvIt\Secrets\secrets.ps1") | Out-Null
+    # }
 
     # Remove temporary directories from previous sessions
     # TODO
@@ -53,8 +53,8 @@ function Invoke-VirtualEnvironment {
         Set-Location -Path $env:PROJECTS_BASE_DIR
     }
 
-    Invoke-Script -ScriptPath ("$env:VENV_CONFIG_DEFAULT_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) | Out-Null
-    Invoke-Script -ScriptPath ("$env:VENV_CONFIG_USER_DIR\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) | Out-Null
+    Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) | Out-Null
+    Invoke-Script -ScriptPath ("~\VenvIt\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "CustomSetup")) | Out-Null
 }
 
 # function ShowEnvVarHelp {
@@ -86,7 +86,7 @@ function Show-Help {
 
     # Introduction
     @"
-This script, 'vi.ps1', initializes a Python virtual environment. This include running the
+This script, 'vs.ps1', initializes a Python virtual environment. This include running the
 VEnv${_project_name}CustomSetup .ps1 script.
 "@ | Write-Host
 
@@ -94,8 +94,8 @@ VEnv${_project_name}CustomSetup .ps1 script.
     @"
 Usage:
 ------
-vi.ps1 ProjectName
-vi.ps1 -Help
+vs.ps1 ProjectName
+vs.ps1 -Help
 
 Parameters:
 1. ProjectName: The name of the project.
@@ -105,14 +105,10 @@ Environment Variables:
 ----------------------
 Prior to starting the PowerShell script, ensure these environment variables are set.
 
-1. PROJECTS_BASE_DIR:     The directory for all projects (e.g., d:\Dropbox\Projects).
-2. VENV_BASE_DIR:         Directory for virtual environments (e.g., c:\venv).
-3. VENV_CONFIG_DEFAULT_DIR:   Directory where the organization configuration scripts for the project are stored.
-3. VENV_CONFIG_USER_DIR:  Directory where the user configuration scripts for the project are stored.
-1. VENV_ENVIRONMENT:      Sets the development environment amrker. Possible values: loc_dev, github_dev, prod, etc.
-3. VENV_SECRETS_DEFAULT_DIR:  Directory for storing organization secrets related to the project (e.g., g:\Google Drive\Secrets).
-3. VENV_SECRETS_USER_DIR: Directory for storing user secrets related to the project (e.g., g:\Google Drive\Secrets).
-4. VENVIT_DIR:            Directory where this script resides.
+1. PROJECTS_BASE_DIR:        The directory for all projects (e.g., d:\Dropbox\Projects).
+2. VENV_BASE_DIR:            Directory for virtual environments (e.g., c:\venv).
+3. VENV_ENVIRONMENT:         Sets the development environment amrker. Possible values: loc_dev, github_dev, prod, etc.
+4. VENVIT_DIR:               Directory where this script resides.
 "@ | Write-Host
 }
 
@@ -123,7 +119,7 @@ if (-not $Pester) {
     Write-Host ''
     Write-Host ''
     $dateTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    Write-Host "=[ START $dateTime ]=================================================[ vi.ps1 ]=" -ForegroundColor Blue
+    Write-Host "=[ START $dateTime ]=================================================[ vs.ps1 ]=" -ForegroundColor Blue
     Write-Host "Initialize the $project_name virtual environment" -ForegroundColor Blue
     if ($ProjectName -eq "" -or $Help) {
         Show-Help
@@ -134,3 +130,4 @@ if (-not $Pester) {
     }
     Write-Host '-[ END ]------------------------------------------------------------------------' -ForegroundColor Cyan
 }
+

@@ -216,7 +216,7 @@ Describe "Utils.Test.ps1: Function Tests" {
 
         It "Should get 0.0.0" {
             $mockInstalVal = Set-TestSetup_0_0_0
-            $Version = Get-Version -SourceDir $env:SCRIPTS_DIR
+            $Version = Get-Version
             $Version | Should -Be "0.0.0"
         }
 
@@ -225,7 +225,7 @@ Describe "Utils.Test.ps1: Function Tests" {
                 Remove-Item -Path "Env:SCRIPTS_DIR"
             }
             $mockInstalVal = Set-TestSetup_6_0_0
-            $Version = Get-Version -SourceDir $env:VENVIT_DIR
+            $Version = Get-Version
             $Version | Should -Be "6.0.0"
         }
 
@@ -234,7 +234,7 @@ Describe "Utils.Test.ps1: Function Tests" {
                 Remove-Item -Path "Env:SCRIPTS_DIR"
             }
             $mockInstalVal = Set-TestSetup_7_0_0
-            $Version = Get-Version -SourceDir $env:VENVIT_DIR
+            $Version = Get-Version
             $Version | Should -Be "7.0.0"
         }
         AfterEach {
@@ -295,9 +295,9 @@ Describe "Utils.Test.ps1: Function Tests" {
         }
 
         It 'Creates a virtual environment' {
-            $pythonVenvPAth = Install-PythonVirtualEnv -Major $major -Minor $minor -Patch $patch
+            $pythonVenvPath = Install-PythonVirtualEnv -Major $major -Minor $minor -Patch $patch
 
-            # $pythonVenvPath = Join-Path -Path $pythonVenvDir -ChildPath "scripts/python.exe"
+            # $pythonVenvPath = Join-Path -Path $pythonVenvDir -ChildPath "scripts\python.exe"
             Test-Path $pythonVenvPath | Should -Be $true
         }
     }
