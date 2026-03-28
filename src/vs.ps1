@@ -4,6 +4,10 @@ param (
     [Parameter(Mandatory = $false, Position = 0)]
     [string]$ProjectName,
 
+    [Parameter(Mandatory = $false, Position = 1)]
+    [ValidateSet("dev_auto", "dev_unit_mdb", "dev_unit_sdb", "dev_e2e", "pre_prod", "prod")]
+    [string]$TargetEnvironment = "dev_auto",
+
     [Parameter(Mandatory = $false)]
     [Switch]$Help,
 
@@ -20,7 +24,7 @@ function Invoke-VirtualEnvironment {
     if ((Get-Module -Name "Utils") -and $Pester ) {
         Remove-Module -Name "Utils"
     }
-    Import-Module $PSScriptRoot\Utils.psm1
+    Import-Module $PSScriptRoot\Utils.psm1 -Force
 
     Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) | Out-Null
     Invoke-Script -ScriptPath ("~\VenvIt\Config\" + (Get-ConfigFileName -ProjectName $ProjectName -Postfix "EnvVar")) | Out-Null
@@ -33,7 +37,7 @@ function Invoke-VirtualEnvironment {
 
     # $env:PROJECT_NAME = $_project_name
     # if ($env:VENV_ENVIRONMENT -eq "loc_dev") {
-    Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Secrets\secrets.ps1") | Out-Null
+    Invoke-Script -ScriptPath ("$env:VENVIT_DIR\Secrets\secrets.ps1") -Arguments ($TargetEnvironment) | Out-Null
     Invoke-Script -ScriptPath ("~\VenvIt\Secrets\secrets.ps1") | Out-Null
     # }
 
