@@ -6,6 +6,8 @@
 | CI           | \[![][pre_commit_ci_img]\][pre_commit_ci_lnk] \[![][codecov_img]\][codecov_lnk] \[![][gha_docu_img]\][gha_docu_lnk]             |
 | Github       | \[![][gh_issues_img]\][gh_issues_lnk] \[![][gh_language_img]\][gh_language_lnk] \[![][gh_last_commit_img]\][gh_last_commit_lnk] |
 
+# Short description
+
 VEnvIt is a utility that uses Python and PowerShell scripts to create, initialise, and remove virtual environments
 tailored for both development and production systems. It provides significant flexibility, allowing users to configure
 their environments according to specific requirements.
@@ -16,6 +18,8 @@ customisation that standard configuration files cannot accommodate.
 
 However, this approach introduces additional complexity and requires a thorough understanding of the application's
 workings. Proficiency in Python and PowerShell scripting is essential to effectively use and configure VEnvIt.
+
+# Module Overview
 
 Is this a Python or a PowerShell project? Thechnically it is both. As much As I would like it to be rather a Python
 project, PowerShell is essential:
@@ -33,11 +37,31 @@ project, PowerShell is essential:
 - **Tailored for Complex Systems**: Designed to handle the intricacies of unique development and production
   environments.
 
+## Project Structure
+
+| Path                                             | Purpose                                                                                                    |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `install.ps1`, `InstallDevEnv.ps1`, `Setup*.ps1` | Bootstrap installation, contributor setup, and local environment automation.                               |
+| `src/*.ps1`, `src/*.psm1`                        | PowerShell entry points and shared modules for creating, activating, upgrading, and removing environments. |
+| `src/venvit/`                                    | Python package with the `venvit` CLI, upgrade routines, and supporting models.                             |
+| `tests/`                                         | PowerShell and pytest coverage for the bootstrap scripts, upgrade path, and Python package.                |
+| `README.md`, `ReleaseNotes.md`                   | User documentation and release history.                                                                    |
+
+# Getting Started
+
 ## Prerequisites
 
 - **Scripting Knowledge**: Familiarity with Python and PowerShell scripting languages.
 - **Understanding of Virtual Environments**: Basic knowledge of virtual environments and their role in development and
   production systems.
+
+## Quick Start
+
+- Install or refresh the shared VEnvIt scripts with `.\install.ps1`.
+- Create a project environment with `.\vn.ps1 -ProjectName MyProject -PythonVer 313 -Organization MyOrg -ResetScripts y -DevMode y`.
+- Activate an existing environment with `.\vs.ps1 -ProjectName MyProject -TargetEnvironment dev_auto`.
+- Remove an environment with `.\vr.ps1 -ProjectName MyProject`.
+- For repo development, run `.\InstallDevEnv.ps1` or use `poetry install --with dev`, then invoke the Python CLI with `venvit upgrade 7.3.0` when testing upgrade flows.
 
 # Usage Overview
 
