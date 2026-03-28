@@ -1,3 +1,36 @@
+# Release 8.0.0
+
+2026-03-28 09:58:24 SAST (UTC+02:00)
+
+______________________________________________________________________
+
+## Breaking Changes
+
+- Renamed `vi.ps1` to `vs.ps1` to avoid conflicts with the Linux editor, added `TargetEnvironment` handling, and aligned the related tests and README usage examples.
+- Replaced the legacy `VENV_CONFIG_*` and `VENV_SECRETS_*` locations with `VENVIT_DIR\Config`, `VENVIT_DIR\Secrets`, `~\VenvIt\Config`, and `~\VenvIt\Secrets`, and added upgrade cleanup for deprecated environment variables.
+
+## Python Packaging and Upgrade Path
+
+- Migrated the package metadata to the PEP 621 `[project]` table, introduced the `venvit` console entry point, added the Python upgrade modules and models, and expanded Python version targeting to 3.10 through 3.13.
+- Updated installation and conclude flows to build and use a dedicated virtual environment under `VENVIT_DIR\venv`, publish the latest packaged files, and keep installation secrets in the new shared and user locations.
+
+## Automation, Tooling and Documentation
+
+- Added reusable publish workflow templates, developer setup scripts, an updated pre-commit configuration, refreshed ignore rules, and the renamed `LICENSE.txt` asset for packaging.
+- Expanded the mixed PowerShell and pytest test suites, refreshed the README for the new `vs.ps1` workflow and Python CLI, and retained the existing release history unchanged.
+
+## Summary Statistics
+
+- Branch name: `hendrik/bee-28-main_feature-venvit-rename-vi-to-vs`
+- Files changed: `55`
+- Insertions: `5602`
+- Deletions: `1165`
+- Changed files (top-level and workflows): `.flake8`, `.gitattributes`, `.github/CODEOWNERS`, `.github/workflows/py-temp-pr-pub-no_docker-def.yaml`, `.github/workflows/py-temp-publish-pub-build_release_notify_after_merge-def.yaml`, `.gitignore`, `.pre-commit-config.yaml`, `InstallDevEnv.ps1`, `LICENSE.txt`, `Manifest.psd1`, `README.md`, `ReleaseNotes.md`, `SetupDotEnv.ps1`, `SetupGitHubAccess.ps1`, `SetupPrivateRepoAccess.ps1`, `ToDo.md`, `envvar_clear.ps1`, `envvar_reset.ps1`, `install.ps1`, `installpythontools.ps1`, `poetry.lock`, `pyproject.toml`, `testResults.xml`
+- Changed files (source): `src/Conclude-UpgradePrep.psm1`, `src/Install-Conclude.psm1`, `src/Uninstall.ps1`, `src/Utils.psm1`, `src/__init__.py`, `src/install.ps1`, `src/secrets.ps1`, `src/venvit/__init__.py`, `src/venvit/main.py`, `src/venvit/models.py`, `src/venvit/setup.py`, `src/venvit/upgrade.py`, `src/vn.ps1`, `src/vr.ps1`, `src/vs.ps1`
+- Changed files (tests): `tests/Conclude-UpgradePrep.Tests.ps1`, `tests/Install-Conclude.Tests.ps1`, `tests/Install.Tests.ps1`, `tests/Publish-TestResources.Tests.ps1`, `tests/Publish-TestResources.psm1`, `tests/Uninstall.Tests.ps1`, `tests/Utils.Tests.ps1`, `tests/__init__.py`, `tests/conftest.py`, `tests/test_core.py`, `tests/test_main.py`, `tests/test_setup.py`, `tests/test_upgrade.py`, `tests/testdata/test_data.py`, `tests/vi.Tests.ps1`, `tests/vn.Tests.ps1`, `tests/vr.Tests.ps1`
+
+______________________________________________________________________
+
 # Release 7.2.0
 
 Establish Python as the primary execution environment for VEnvIt to ensure cross-platform compatibility and minimize reliance on PowerShell.
